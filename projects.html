@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<title>jacksj - projects</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> 
+    <script> 
+    	$(function(){
+				$("#navbar").load("navbar.html", () => { $("#nav-proj").addClass("active"); }); 
+    	});
+		</script>
+	</head>
+
+	<body>
+		<center>
+			<div id="navbar">
+			</div>
+		</center>
+		<center>
+			<div class="split">
+				<div class="category">
+					<h3><a target="_blank" href="https://github.com/jacketsj/codearchive">
+							Algorithms Code Archive
+						</a>
+					</h3>
+					<ul>
+						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/codearchive/blob/master/hash/bloomfilter.cpp">
+								Bloom Filters with Universal Hashing
+							</a></li>
+						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/codearchive/blob/master/numeric/linalg.cpp">
+								Linear Algebra Primitives
+							</a></li>
+						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/codearchive/blob/master/numeric/linalg.cpp">
+								Segment Tree for Subtree Queries
+							</a class="roundbox"></li>
+						<li><a target="_blank" href="https://github.com/jacketsj/codearchive/blob/master/string/KMP.cpp">
+								Knuth-Morris-Pratt
+							</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="split">
+				<div class="category">
+					<h3><a target="_blank" href="https://github.com/jacketsj/pHeapify">
+							Parallel Build-Heap
+						</a>
+					</h3>
+					<ul>
+						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/pHeapify/blob/master/pHeapify.cc">
+								OpenMP and C++ Impementation
+							</a></li>
+						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/pHeapify/releases">
+								Explanation
+							</a></li>
+					</ul>
+				</div>
+			</div>
+		</center>
+	</body>
+</html>
