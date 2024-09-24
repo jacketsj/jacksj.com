@@ -1,0 +1,89 @@
+{
+  "publications": [
+    {
+      "authors": [
+        {"name": "P Liu"},
+        {"name": "J Spalding-Jamieson", "self": true},
+        {"name": "B Zhang"},
+        {"name": "DW Zheng"}
+      ],
+      "paper_name": "Coordinated Motion Planning Through Randomized k-Opt",
+      "short_paper_name": null,
+      "extended_abstract": false,
+      "code_link": null,
+      "pdf_link": null,
+      "journal": true,
+      "ordered": false,
+      "venue": "ACM Journal of Experimental Algorithmics (JEA)",
+      "year_published": 2022
+    },
+    {
+      "authors": [
+        {"name": "L Crombez"},
+        {"name": "GD Da Fonseca"},
+        {"name": "F Fontan"},
+        {"name": "Y Gerard", "self": false},
+        {"name": "A Gonzalez-Lorenzo", "self": false}
+      ],
+      "paper_name": "Conflict Optimization for Binary CSP Applied to Minimum Partition into Plane Subgraphs and Graph Coloring",
+      "short_paper_name": null,
+      "extended_abstract": false,
+      "code_link": null,
+      "pdf_link": null,
+      "journal": true,
+      "ordered": false,
+      "venue": "ACM Journal of Experimental Algorithmics",
+      "year_published": 2023
+    },
+    {
+      "authors": [
+        {"name": "J Spalding-Jamieson", "self": true},
+        {"name": "B Zhang"},
+        {"name": "DW Zheng"}
+      ],
+      "paper_name": "Conflict-based Local Search for Minimum Partition into Plane Subgraphs (CG Challenge)",
+      "short_paper_name": null,
+      "extended_abstract": false,
+      "code_link": null,
+      "pdf_link": null,
+      "journal": false,
+      "ordered": false,
+      "venue": "38th International Symposium on Computational Geometry (SoCG)",
+      "year_published": 2022
+    },
+    {
+      "authors": [
+        {"name": "DW Zheng"},
+        {"name": "J Spalding-Jamieson", "self": true},
+        {"name": "B Zhang"}
+      ],
+      "paper_name": "Computing Low-Cost Convex Partitions for Planar Point Sets with Randomized Local Search and Constraint Programming (CG Challenge)",
+      "short_paper_name": null,
+      "extended_abstract": false,
+      "code_link": null,
+      "pdf_link": null,
+      "journal": false,
+      "ordered": true,
+      "venue": "SoCG",
+      "year_published": 2020
+    },
+    {
+      "authors": [
+        {"name": "W Evans", "self": false},
+        {"name": "E Gethner", "self": false},
+        {"name": "J Spalding-Jamieson", "self": true},
+        {"name": "A Wolff", "self": false}
+      ],
+      "paper_name": "Angle Covers: Algorithms and Complexity",
+      "short_paper_name": null,
+      "extended_abstract": false,
+      "code_link": null,
+      "pdf_link": null,
+      "ordered": false,
+      "journal": false,
+      "venue": "International Workshop on Algorithms and Computation",
+      "year_published": 2020
+    }
+  ]
+}
+
