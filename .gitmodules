@@ -1,0 +1,3 @@
+[submodule "pubdata"]
+	path = pubdata
+	url = https://github.com/jacketsj/pubdata.git
