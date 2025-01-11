@@ -1,86 +1,286 @@
-<html>
-	<head>
-		<title>jacksj - home</title>
-		<link rel="stylesheet" href="style.css">
-		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> 
-    <script> 
-    	$(function(){
-				$("#navbar").load("navbar.html", () => {$("#nav-home").addClass("active");}); 
-    	});
-		</script>
-	</head>
 
-	<body>
-		<center>
-			<div id="navbar">
-			</div>
-		</center>
-		<center>
-			<div class="split">
-				<div class="category">
-					<h3>Publications</h3>
-					<ul>
-						<li>
-							<div class="roundbox">
-								<a class="roundbox-lite" target="_blank" href="https://drops.dagstuhl.de/opus/frontdoor.php?source_opus=12241">
-									<!--Computing Low-Cost Convex Partitions for Planar Point Sets with Randomized Local Search and Constraint Programming-->
-									Convex Partitions for Planar Point Sets
-								</a>
-								<a class="roundbox-lite" target="_blank" href="https://github.com/jacketsj/convexpartition">
-									Code
-								</a>
-							</div>
-						</li>
-						<li class="roundbox"><a target="_blank" href="https://arxiv.org/abs/1911.02040">
-								Angle Covers: Algorithms and Complexity
-							</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="split">
-				<div class="category">
-					<h3>Projects</h3>
-					<ul>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/geometryvis">
-								Geometric Algorithm Visualization tool
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/battleship_enumeration">
-								Optimized Exact Battleship Solver
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/numcal">
-								Numerical linear algebra methods
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/codearchive">
-								Algorithms code archive
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/pHeapify">
-								Parallel construction of binary-heaps
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/pveri">
-								Using model-checkers to verify parallel systems
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/battleship_enumeration">
-								Computing exact probabilities in battleship
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/sat">
-								A SAT-solver implemented in OCaml
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/ParasiticSurvivalArena">
-								Species survival-game
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/ConstantHeadshotsZ">
-								Fully customizable top-down shooter game
-							</a></li>
-						<li class="roundbox"><a target="_blank" href="https://github.com/jacketsj/Tweg">
-								A difficult card-game
-							</a></li>
-						<!--<li><a target="_blank" href="https://github.com/jacketsj/convexpartition">
-								Convex Paritions (CG:SHOP 2020)
-							</a></li>-->
-					</ul>
-					<!--You can find my GitHub <a target="_blank" href="https://github.com/jacketsj">here</a>.-->
-				</div>
-			</div>
-		</center>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack S-J</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        #container {
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #666;
+            margin-top: 0;
+        }
+        p.bio {
+            font-size: 1em;
+            color: #555;
+        }
+        a.email {
+            font-size: 1em;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a.email:hover {
+            text-decoration: underline;
+        }
+
+        /* Publications Section */
+        h3, h4 {
+            color: #444;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .roundbox {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Width of work/pub slides */
+            width: 100%;
+            margin: 10px auto;  /* Center each entry horizontally */
+        }
+        .pub-entry {
+            display: flex;
+            flex-direction: column;
+        }
+        .pub-header {
+            display: flex;
+            align-items: center;
+        }
+        .pub-links {
+            margin-right: 5px; /* Space between icons and title */
+        }
+        .pub-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .pub-title:hover {
+            text-decoration: underline;
+            cursor: help;
+        }
+        .pub-authors {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .pub-venue {
+            font-size: 0.85em;
+            color: #777;
+        }
+        .pub-comment {
+            font-size: 0.85em;
+            color: #444;
+        }
+        .pub-links a img {
+            margin-right: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Jack S-J</h1>
+            <h2>Researcher and Software Engineer</h2>
+            <a class="email">firstname + last name initials @uwaterloo.ca</a>
+            <p class="bio">I am a researcher and software engineer primarily specializing in computational geometry and related fields. I am interested in efficient, practical algorithms and approaches for problems, but I have been known to dabble in lower bounds, constraint solving, and various forms of parallelization and hardware acceleration.<br><br>I have previously worked in industry as a researcher/software engineer tackling approximate-nearest neighbour problems, FPGA middleware, and low-level distributed robotics graph-compute systems.</p>
+        </header>
+
+        <!-- Works Section -->
+        <div id="content">
+            <h3>Works</h3>
+            <h4>Software</h4><ul>
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"> <a href="https://github.com/jacketsj/expANN" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></div>
+                <span class="pub-title" title="expANN - Fast In-Memory Approximate Nearest Neighbour Experiment Library">expANN - Approximate Nearest Neighbour Experiments</span>
+            </div>
+            <span class="pub-authors"><b>Jack S-J</b></span><br>
+            <span class="pub-venue">2024</span>
+            <span class="pub-comment">AFAIK the current (as of 2024) best in-memory ANN library on the SIFT1M dataset</span>
+        </div>
+    </li>
+    </ul><h4>Preprints</h4><ul>
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/2412.15567" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="The Analytic Arc Cover Problem and its Applications to Contiguous Art Gallery, Polygon Separation, and Shape Carving">Analytic Arc Cover Problem</span>
+            </div>
+            <span class="pub-authors">Eliot W. Robson, <b>Jack S-J</b>, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="arXiv">arXiv</abbr>, 2024</span>
+            
+        </div>
+    </li>
+    </ul><h4>Conference Papers</h4><ul>
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/2407.15981" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Carving Polytopes with Saws in 3D">Carving Polytopes</span>
+            </div>
+            <span class="pub-authors">Eliot W. Robson, <b>Jack S-J</b>, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="Canadian Conference on Computational Geometry">CCCG</abbr>, 2024</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/2409.04074" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Morphing Planar Graph Drawings via Orthogonal Box Drawings">Morphing Planar Graph Drawings</span>
+            </div>
+            <span class="pub-authors">Therese Biedl, Anna Lubiw, <b>Jack S-J</b></span><br>
+            <span class="pub-venue"><abbr title="International Symposium on Graph Drawing and Network Visualization">GD</abbr>, 2024</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol224-socg2022/LIPIcs.SoCG.2022.72/LIPIcs.SoCG.2022.72.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a> <a href="https://github.com/jacketsj/cgshop2022-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></div>
+                <span class="pub-title" title="Conflict-Based Local Search for Minimum Partition into Plane Subgraphs (CG Challenge)">CBLS for Min Partition into Plane Subgraphs</span>
+            </div>
+            <span class="pub-authors"><b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2022</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/2103.15062" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a> <a href="https://github.com/jacketsj/cgshop2021-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></div>
+                <span class="pub-title" title="Coordinated Motion Planning Through Randomized k-Opt">Coordinated Motion Planning</span>
+            </div>
+            <span class="pub-authors">Paul Liu, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2021</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/1911.02040" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Angle Covers: Algorithms and Complexity">Angle Covers</span>
+            </div>
+            <span class="pub-authors">William Evans, Ellen Gethner, <b>Jack S-J</b>, Alexander Wolff</span><br>
+            <span class="pub-venue"><abbr title="International Workshop on Algorithms and Computation">WALCOM</abbr>, 2020</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol164-socg2020/LIPIcs.SoCG.2020.83/LIPIcs.SoCG.2020.83.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Computing Low-Cost Convex Partitions for Planar Point Sets with Randomized Local Search and Constraint Programming (CG Challenge)">Computing Low-Cost Convex Partitions</span>
+            </div>
+            <span class="pub-authors">Da Wei Zheng, <b>Jack S-J</b>, Brandon Zhang</span><br>
+            <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2020</span>
+            
+        </div>
+    </li>
+    </ul><h4>Journal Papers</h4><ul>
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/2303.09632" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Conflict Optimization for Binary CSP Applied to Minimum Partition into Plane Subgraphs and Graph Coloring">Conflict Optimization for Binary CSP</span>
+            </div>
+            <span class="pub-authors">Loïc Crombez, Guilherme D. da Fonseca, Florian Fontan, Yan Gerard, Aldo Gonzalez-Lorenzo, Pascal Lafourcade, Luc Libralesso, Benjamin Momège, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="ACM Journal of Experimental Algorithmics">ACM JEA</abbr>, 2023</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://arxiv.org/pdf/2103.15062" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a> <a href="https://github.com/jacketsj/cgshop2021-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></div>
+                <span class="pub-title" title="Coordinated Motion Planning Through Randomized k-Opt">Coordinated Motion Planning</span>
+            </div>
+            <span class="pub-authors">Paul Liu, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="ACM Journal of Experimental Algorithmics">ACM JEA</abbr>, 2022</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://jgaa-v4.cs.brown.edu/index.php/jgaa/article/view/paper576/2380" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Angle Covers: Algorithms and Complexity">Angle Covers</span>
+            </div>
+            <span class="pub-authors">William Evans, Ellen Gethner, <b>Jack S-J</b>, Alexander Wolff</span><br>
+            <span class="pub-venue"><abbr title="Journal of Graph Algorithms and Applications">JGAA</abbr>, 2021</span>
+            
+        </div>
+    </li>
+    </ul><h4>Theses</h4><ul>
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://uwspace.uwaterloo.ca/bitstream/handle/10012/20172/Spalding-Jamieson_Jack.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="Graph Morphing via Orthogonal Box Drawings">Graph Morphing via Orthogonal Box Drawings</span>
+            </div>
+            <span class="pub-authors"><b>Jack S-J</b></span><br>
+            <span class="pub-venue"><abbr title="University of Waterloo">University of Waterloo</abbr>, 2023</span>
+            
+        </div>
+    </li>
+    </ul><h4>Extended Abstracts</h4><ul>
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://www.cs.tufts.edu/research/geometry/FWCG24/papers/FWCG_24_paper_31.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></div>
+                <span class="pub-title" title="MOPBucket: A Massively OP Algorithm for k-means Clustering Bucketloads of Data">MOPBucket</span>
+            </div>
+            <span class="pub-authors"><b>Jack S-J</b>, Eliot W. Robson, Da Wei Zheng</span><br>
+            <span class="pub-venue"><abbr title="Fall Workshop on Computational Geometry">FWCG</abbr>, 2024</span>
+            
+        </div>
+    </li>
+    
+    <li class="roundbox">
+        <div class="pub-entry">
+            <div class="pub-header">
+                <div class="pub-links"><a href="https://www.math.science.cmu.ac.th/tjcdcggg/Book-abstract.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a> <a href="https://github.com/jacketsj/battleship_enumeration" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></div>
+                <span class="pub-title" title="Computing the Probability of Striking a Battleship">Computing the Probability of Striking a Battleship</span>
+            </div>
+            <span class="pub-authors"><b>Jack S-J</b></span><br>
+            <span class="pub-venue"><abbr title="Thailand-Japan Conference on Discrete and Computational Geometry, Graphs, and Games">TJCDCGGG</abbr>, 2021</span>
+            
+        </div>
+    </li>
+    </ul>
+        </div>
+    </div>
+</body>
 </html>
