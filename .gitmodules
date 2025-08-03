@@ -1,3 +1,6 @@
 [submodule "pubdata"]
 	path = pubdata
 	url = https://github.com/jacketsj/pubdata.git
+[submodule "docstore"]
+	path = docstore
+	url = https://github.com/jacketsj/docstore.git
