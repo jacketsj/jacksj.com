@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aetherium Explorer</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#0a0812;font-family:sans-serif;color:#ebebeb;}
+#ui{position:fixed;left:0;top:0;width:100%;pointer-events:none;text-align:center}
+button{pointer-events:auto;font:600 18px sans-serif;padding:12px 28px;border:none;border-radius:8px;
+       background:#2d2d41;color:#ebebeb;cursor:pointer;margin:6px}
+button:hover{background:#46466b}
+h1{font-size:64px;margin:.5em 0}
+h2{font-size:38px;margin:.2em 0}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="ui"></div>
+
+<script type="module">
+/* ─────────── Constants ─────────── */
+const BASE_OBJ=3, OBJ_INC=1, BASE_ENERGY=25, ENERGY_DEC_LVL=2;
+const MAX_LIVES=3, PROBE_COST=1, HIT_GAIN=7, HIT_TOL=55;
+const PART_N=3000, PART_SPEED=110, PART_L_MIN=1.5, PART_L_MAX=2.8;
+const FIELD_K=6000, VORTEX_K=1.2, EPS=1e-3, GAUSS_R=110;
+const COLORS={
+  BG:'#0a0812', STAR:'#c8dcff',
+  PART_SLOW:[70,100,220], PART_FAST:[230,240,255],
+  PULSAR:'#50ffff', SINGULAR:'#ff50ff', VORTEX:'#ffff50'
+};
+
+/* ─────────── Canvas and fog‑of‑war ─────────── */
+const canvas=document.getElementById('game'), ctx=canvas.getContext('2d');
+let W=innerWidth, H=innerHeight;
+
+const nebula=document.createElement('canvas'), nctx=nebula.getContext('2d');
+function resetNebula(){
+  nctx.globalCompositeOperation='source-over';
+  nctx.fillStyle='#000';                                   // fully opaque
+  nctx.clearRect(0,0,nebula.width,nebula.height);          // wipe old bitmap
+  nctx.fillStyle='#000';                                   // fully opaque
+  nctx.fillRect(0,0,nebula.width,nebula.height);
+}
+function carveHole(x,y,r){
+  const g=nctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,'rgba(0,0,0,1)');
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  nctx.globalCompositeOperation='destination-out';
+  nctx.fillStyle=g;
+  nctx.beginPath();nctx.arc(x,y,r,0,Math.PI*2);nctx.fill();
+  nctx.globalCompositeOperation='source-over';
+}
+
+/* keep both canvases the size of the window */
+function resize(){
+  W=innerWidth; H=innerHeight;
+  canvas.width=W; canvas.height=H;
+  nebula.width=W; nebula.height=H;
+  resetNebula();                                         // ← moved *after* size set
+}
+addEventListener('resize',resize);
+
+/* ─────────── Data structures ─────────── */
+class FlowObj{constructor(x,y,kind,rot=1){this.x=x;this.y=y;this.kind=kind;this.rot=rot;this.found=false;}}
+class Part{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.life=rnd(PART_L_MIN,PART_L_MAX);this.fade=0;}
+}
+
+/* helpers */
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function dist(x1,y1,x2,y2){const dx=x1-x2,dy=y1-y2;return Math.hypot(dx,dy);}
+function field(x,y,objs){
+  let ex=0,ey=0;
+  for(const o of objs){
+    const dx=x-o.x,dy=y-o.y,dsq=dx*dx+dy*dy+EPS,inv=FIELD_K/(dsq*Math.sqrt(dsq));
+    if(o.kind==='pulsar'){ex+=dx*inv;ey+=dy*inv;}
+    else if(o.kind==='singularity'){ex-=dx*inv;ey-=dy*inv;}
+    else{ex+=-dy*inv*o.rot*VORTEX_K;ey+=dx*inv*o.rot*VORTEX_K;}
+  }
+  return [ex,ey];
+}
+function lerpColor(a,b,t){return a.map((v,i)=>v+(b[i]-v)*t);}
+const stars=Array.from({length:200},()=>({x:rnd(0,W),y:rnd(0,H),r:rnd(.5,1.8)}));
+
+/* ─────────── UI helpers ─────────── */
+const ui=document.getElementById('ui');
+function clearUI(){ui.innerHTML='';}
+function addButton(txt,cb){const b=document.createElement('button');b.textContent=txt;b.onclick=cb;ui.appendChild(b);}
+
+/* ─────────── Game state ─────────── */
+let state='MENU', sector=1,lives=3,objs=[],parts=[],energy=BASE_ENERGY,win=false,end=false;
+
+function toMenu(){
+  state='MENU'; clearUI();
+  ui.innerHTML='<h1>Aetherium Explorer</h1>';
+  addButton('Begin Expedition',startLevel);
+  addButton('Quit',()=>location.reload());
+}
+
+function startLevel(){
+  resetNebula();
+  setTimeout(resetNebula, 0);
+  resetNebula();
+  setTimeout(resetNebula, 0);
+  state='PLAY'; win=end=false; clearUI();
+  const n=BASE_OBJ+(sector-1)*OBJ_INC;
+  energy=Math.max(8,BASE_ENERGY-(sector-1)*ENERGY_DEC_LVL);
+  objs=[];
+  while(objs.length<n){
+    const x=rnd(100,W-100),y=rnd(100,H-100);
+    if(objs.every(o=>dist(x,y,o.x,o.y)>160)){
+      const kinds=['pulsar','singularity','vortex'],kind=kinds[Math.random()*3|0];
+      objs.push(new FlowObj(x,y,kind,kind==='vortex'?(Math.random()<.5?-1:1):1));
+    }
+  }
+  parts=Array.from({length:PART_N},()=>new Part());
+  resetNebula();
+  setTimeout(resetNebula, 0);
+  resetNebula();
+}
+
+function finish(victory){
+  win=victory; end=true; clearUI();
+  ui.innerHTML=`<h2>${victory?'Sector Cleared':'Mission Failed'}</h2>`;
+  if(victory) addButton('Next Sector',()=>{sector++;startLevel();});
+  else if(lives>0){lives--;addButton(`Retry (${lives} Ships Left)`,startLevel);}
+  addButton('Return to Menu',toMenu);
+  nctx.clearRect(0,0,nebula.width,nebula.height);          // reveal field
+}
+
+/* ─────────── Input ─────────── */
+canvas.addEventListener('click',e=>{
+  if(state!=='PLAY'||end) return;
+  const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+  const tgt=objs.filter(o=>!o.found).sort((a,b)=>dist(x,y,a.x,a.y)-dist(x,y,b.x,b.y))[0];
+  if(tgt && dist(x,y,tgt.x,tgt.y)<=HIT_TOL){
+    tgt.found=true; energy+=HIT_GAIN; carveHole(tgt.x,tgt.y,GAUSS_R*1.4);
+    if(objs.every(o=>o.found)) finish(true);
+  }else{
+    if(energy<PROBE_COST){finish(false);return;}
+    energy-=PROBE_COST; carveHole(x,y,GAUSS_R);
+    if(energy<=0) finish(false);
+  }
+});
+
+/* ─────────── Main loop ─────────── */
+let last=performance.now();
+function loop(now){
+  const dt=Math.min((now-last)/1000,1/30); last=now;
+  ctx.fillStyle=COLORS.BG; ctx.fillRect(0,0,W,H);
+
+  /* background stars */
+  for(const s of stars){
+    const tw=.6+Math.random()*.4;
+    ctx.fillStyle=`rgba(200,220,255,${tw})`;
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+  }
+
+  if(state==='PLAY'){
+    /* particles */
+    for(const p of parts){
+      p.life-=dt; if(p.life<=0||p.x<0||p.x>W||p.y<0||p.y>H) p.reset();
+      const [ex,ey]=field(p.x,p.y,objs); const sp=Math.hypot(ex,ey)+1e-6;
+      p.vx=ex/sp; p.vy=ey/sp; p.x+=p.vx*PART_SPEED*dt; p.y+=p.vy*PART_SPEED*dt;
+      p.fade=Math.min(1,p.fade+dt*3);
+      const alpha=p.life>0.3?p.fade:p.fade*(p.life/0.3);
+      const t=Math.min(1,sp/80),col=lerpColor(COLORS.PART_SLOW,COLORS.PART_FAST,t);
+      ctx.strokeStyle=`rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
+      ctx.lineWidth=2; const len=1+t*4;
+      ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.vx*len,p.y-p.vy*len);ctx.stroke();
+    }
+
+    /* fog‑of‑war */
+    ctx.drawImage(nebula,0,0,W,H);
+
+    /* anomalies */
+    const time=now/1000;
+    for(const o of objs){
+      if(!o.found&&!end) continue;
+      const pulse=1+Math.sin(time*4+o.x)*.1;
+      if(o.kind==='vortex'){
+        ctx.strokeStyle=COLORS.VORTEX; ctx.lineWidth=3;
+        const ang=time*2*o.rot;
+        for(let i=0;i<3;i++){
+          const off=i*(Math.PI*2/3),r=8*pulse;
+          ctx.beginPath();
+          ctx.moveTo(o.x+r*Math.cos(ang+off),           o.y+r*Math.sin(ang+off));
+          ctx.lineTo(o.x+r*Math.cos(ang+off+Math.PI*.8),o.y+r*Math.sin(ang+off+Math.PI*.8));
+          ctx.stroke();
+        }
+      }else{
+        ctx.fillStyle=o.kind==='pulsar'?COLORS.PULSAR:COLORS.SINGULAR;
+        ctx.strokeStyle='#fff'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(o.x,o.y,10*pulse,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(o.x,o.y,14*pulse,0,Math.PI*2); ctx.stroke();
+      }
+    }
+
+    /* HUD */
+    ctx.fillStyle='#ebebeb'; ctx.font='26px sans-serif';
+    ctx.fillText(`Sector ${sector}   |   Energy ${energy}   |   Ships ${lives}`,10,32);
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ─────────── Bootstrap ─────────── */
+resize();                // sets sizes *then* fills the fog
+toMenu();                // show main menu
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
