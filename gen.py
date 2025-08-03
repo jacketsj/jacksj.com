@@ -40,6 +40,16 @@ def build_site(out_dir):
         if fname.lower().endswith(".png"):
             shutil.copy(os.path.join("pubdata", fname), out_dir)
 
+    # copy all of docstore into out_dir/docstore, excluding the nocopy folder
+    doc_src = "docstore"
+    doc_dst = os.path.join(out_dir, "docstore")
+    if os.path.isdir(doc_src):
+        shutil.copytree(
+            doc_src,
+            doc_dst,
+            ignore=shutil.ignore_patterns("nocopy")
+        )
+
 def deploy_site(build_dir):
     """
     Clone gh-pages into a fresh temp folder, reset it to origin,
