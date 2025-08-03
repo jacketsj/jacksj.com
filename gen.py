@@ -1,105 +1,98 @@
+#!/usr/bin/env python3
 import os
 import subprocess
 import shutil
 import sys
 import tempfile
 
-def run_command(command, cwd=None):
-    """Run a shell command and handle errors."""
-    result = subprocess.run(command, shell=True, cwd=cwd, capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Error running command: {command}")
-        print(result.stderr)
-        sys.exit(1)
-    return result.stdout.strip()
+def run(cmd, cwd=None):
+    """Run a shell command; exit on failure."""
+    print(f"> {cmd}  (cwd={cwd or os.getcwd()})")
+    p = subprocess.run(cmd, shell=True, cwd=cwd,
+                       capture_output=True, text=True)
+    if p.returncode != 0:
+        print(p.stderr, file=sys.stderr)
+        sys.exit(p.returncode)
+    return p.stdout.strip()
 
-def generate_site(temp_dir):
-    # Step 0: Update the submodule containing the site data
-    print("Updating submodules...")
-    run_command("git submodule update")
-    # Step 1: Run generator.py inside pubdata
-    print("Running generator.py to generate index.html...")
-    run_command("python3 generator.py", cwd="pubdata")
-    
-    # Step 2: Copy generated index.html and .png files to the temporary directory
-    print("Copying generated files to temporary directory...")
-    shutil.copy("pubdata/index.html", temp_dir)
-    shutil.copy("CNAME", temp_dir)
+def update_pubdata():
+    """Init submodule, switch to master, pull latest."""
+    print("→ Updating pubdata submodule…")
+    run("git submodule update --init --recursive")
+    run("git fetch origin master", cwd="pubdata")
+    run("git checkout master",   cwd="pubdata")
+    run("git pull",              cwd="pubdata")
 
-    for file in os.listdir("pubdata"):
-        if file.endswith(".png"):
-            shutil.copy(os.path.join("pubdata", file), temp_dir)
+def build_site(out_dir):
+    """Run generator.py in pubdata and copy artifacts + root CNAME to out_dir."""
+    update_pubdata()
+    print("→ Generating site…")
+    run("python3 generator.py", cwd="pubdata")
 
-def switch_to_gh_pages():
-    # Step 3: Checkout to gh-pages branch
-    current_branch = run_command("git branch --show-current")
-    print(f"Current branch: {current_branch}")
+    os.makedirs(out_dir, exist_ok=True)
+    # copy generated index.html
+    shutil.copy(os.path.join("pubdata", "index.html"), out_dir)
+    # copy CNAME from repo root (not pubdata)
+    shutil.copy("CNAME", out_dir)
 
-    global stash_needed
-    stash_needed = False
+    # copy all .png from pubdata
+    for fname in os.listdir("pubdata"):
+        if fname.lower().endswith(".png"):
+            shutil.copy(os.path.join("pubdata", fname), out_dir)
 
-    if current_branch != "gh-pages":
-        print("Checking for uncommitted changes...")
-        status = run_command("git status --porcelain")
-        if status:
-            print("Stashing uncommitted changes...")
-            run_command("git stash")
-            stash_needed = True
+def deploy_site(build_dir):
+    """
+    Clone gh-pages into a fresh temp folder, reset it to origin,
+    wipe everything but .git/.gitignore, then copy in build_dir and push.
+    """
+    print("→ Cloning gh-pages branch into temp…")
+    remote = run("git config --get remote.origin.url")
+    gh_dir = os.path.join(build_dir, "gh-pages")
+    run(f"git clone --branch gh-pages --single-branch {remote} {gh_dir}")
 
-        print("Checking out gh-pages branch...")
-        run_command("git checkout gh-pages")
+    print("→ Resetting to origin/gh-pages to avoid conflicts…")
+    run("git fetch origin gh-pages", cwd=gh_dir)
+    run("git reset --hard origin/gh-pages", cwd=gh_dir)
 
-def update_gh_pages(temp_dir):
-    # Ensure we're on the gh-pages branch before deleting anything
-    current_branch = run_command("git branch --show-current")
-    if current_branch != "gh-pages":
-        print("ERROR: Not on gh-pages branch! Aborting cleanup to prevent data loss.")
-        sys.exit(1)
+    print("→ Cleaning old files…")
+    for item in os.listdir(gh_dir):
+        if item in (".git", ".gitignore"):
+            continue
+        path = os.path.join(gh_dir, item)
+        if os.path.isdir(path):
+            shutil.rmtree(path)
+        else:
+            os.remove(path)
 
-    # Step 4: Remove old site files but protect .git and .gitignore
-    print("Cleaning up old files in gh-pages (except .git and .gitignore)...")
-    for item in os.listdir():
-        if item not in [".git", ".gitignore"]:
-            if os.path.isdir(item):
-                shutil.rmtree(item)
-            else:
-                os.remove(item)
+    print("→ Copying new site into gh-pages…")
+    for item in os.listdir(build_dir):
+        if item == "gh-pages":
+            continue
+        src = os.path.join(build_dir, item)
+        dst = os.path.join(gh_dir, item)
+        if os.path.isdir(src):
+            shutil.copytree(src, dst)
+        else:
+            shutil.copy2(src, dst)
 
-    # Step 5: Copy new content from the temp directory
-    print("Copying new site files to gh-pages...")
-    for file in os.listdir(temp_dir):
-        shutil.copy(os.path.join(temp_dir, file), ".")
-
-    # Step 6: Commit and push changes
-    print("Adding changes to git...")
-    run_command("git add .")
-
-    print("Committing changes...")
+    print("→ Committing and pushing gh-pages…")
+    run("git add .", cwd=gh_dir)
     try:
-        run_command('git commit -m "Deploy updated site"')
+        run('git commit -m "Deploy updated site"', cwd=gh_dir)
     except SystemExit:
-        print("No changes to commit.")
-
-    print("Pushing to gh-pages...")
-    run_command("git push origin gh-pages")
-
-def return_to_main():
-    print("Returning to main branch...")
-    run_command("git checkout main")
-
-    if stash_needed:
-        print("Applying stashed changes...")
-        run_command("git stash pop")
+        print("   (nothing to commit)")
+    run("git push origin gh-pages", cwd=gh_dir)
 
 def main():
-    # Use a safe temporary directory
-    with tempfile.TemporaryDirectory() as temp_dir:
-        generate_site(temp_dir)
-        switch_to_gh_pages()
-        update_gh_pages(temp_dir)
-        return_to_main()
-    
-    print("Deployment complete!")
+    # ensure we're in the repo root
+    base = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(base)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        build_dir = os.path.join(tmp, "build")
+        build_site(build_dir)
+        deploy_site(build_dir)
+    print("✅ Deployment complete!")
 
 if __name__ == "__main__":
     main()
