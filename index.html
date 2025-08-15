@@ -103,28 +103,24 @@
         .clickable-pub:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
-        .pub-main-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            cursor: pointer;
-        }
-        .pub-main-link:hover {
-            color: inherit;
-        }
-        .pub-main-link:hover .pub-title {
+        .clickable-pub:hover .pub-title {
             text-decoration: underline;
         }
-        .pub-links-absolute {
+        .pub-bg-link {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            z-index: 10;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
-        .pub-links-space {
-            width: 40px;
-            height: 16px;
-            display: inline-block;
+        .pub-entry {
+            position: relative;
+            z-index: 2;
+        }
+        .pub-links {
+            position: relative;
+            z-index: 10;
         }
     </style>
 </head>
@@ -143,303 +139,263 @@
             <h3><b>Works</b></h3>
             <h4>Preprints</h4><ul>
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2506.01228" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2506.01228" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Reweighted Spectral Partitioning Works: Bounds for Special Graph Classes">Reweighted Spectral Partitioning Works</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b></span><br>
-                    <span class="pub-venue"><abbr title="arXiv">arXiv</abbr>, 2025</span>
-                    
+            <a href="https://arxiv.org/pdf/2506.01228" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2506.01228" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Reweighted Spectral Partitioning Works: Bounds for Special Graph Classes">Reweighted Spectral Partitioning Works</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b></span><br>
+                <span class="pub-venue"><abbr title="arXiv">arXiv</abbr>, 2025</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2507.22293" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2507.22293" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Subquadratic Approximation Algorithms for Separating Two Points with Objects in the Plane">Subquadratic Approximation Algorithms for Separating Two Points with Objects in the Plane</span>
-                    </div>
-                    <span class="pub-authors">Jayson Lynch, <b>Jack S-J</b></span><br>
-                    <span class="pub-venue"><abbr title="arXiv">arXiv</abbr>, 2025</span>
-                    
+            <a href="https://arxiv.org/pdf/2507.22293" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2507.22293" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Subquadratic Approximation Algorithms for Separating Two Points with Objects in the Plane">Subquadratic Approximation Algorithms for Separating Two Points with Objects in the Plane</span>
                 </div>
-            </a>
+                <span class="pub-authors">Jayson Lynch, <b>Jack S-J</b></span><br>
+                <span class="pub-venue"><abbr title="arXiv">arXiv</abbr>, 2025</span>
+                
+            </div>
         </li>
         </ul><h4>Conference Papers</h4><ul>
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2504.17289" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2504.17289" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Separating Two Points with Obstacles in the Plane: Improved Upper and Lower Bounds">Separating Two Points with Obstacles in the Plane</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b>, Anurag Murty Naredla</span><br>
-                    <span class="pub-venue"><abbr title="European Symposium on Algorithms">ESA</abbr>, 2025</span>
-                    
+            <a href="https://arxiv.org/pdf/2504.17289" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2504.17289" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Separating Two Points with Obstacles in the Plane: Improved Upper and Lower Bounds">Separating Two Points with Obstacles in the Plane</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b>, Anurag Murty Naredla</span><br>
+                <span class="pub-venue"><abbr title="European Symposium on Algorithms">ESA</abbr>, 2025</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/LIPIcs.SoCG.2025.20/LIPIcs.SoCG.2025.20.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/LIPIcs.SoCG.2025.20/LIPIcs.SoCG.2025.20.pdf" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Polynomial-Time Algorithms for Contiguous Art Gallery and Related Problems">Contiguous Art Gallery and Related Problems</span>
-                    </div>
-                    <span class="pub-authors">Ahmad Biniaz, Anil Maheshwari, Magnus Christian Ring Merrild, Joseph S.B. Mitchell, Saeed Odak, Valentin Polishchuk, Eliot W. Robson, Casper Moldrup Rysgaard, Jens Kristian Refsgaard Schou, Thomas Shermer, <b>Jack S-J</b>, Rolf Svenning, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2025</span>
-                    <span class="pub-comment">Combined paper including "Analytic Arc Cover Problem"</span>
+            <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/LIPIcs.SoCG.2025.20/LIPIcs.SoCG.2025.20.pdf" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol332-socg2025/LIPIcs.SoCG.2025.20/LIPIcs.SoCG.2025.20.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Polynomial-Time Algorithms for Contiguous Art Gallery and Related Problems">Contiguous Art Gallery and Related Problems</span>
                 </div>
-            </a>
+                <span class="pub-authors">Ahmad Biniaz, Anil Maheshwari, Magnus Christian Ring Merrild, Joseph S.B. Mitchell, Saeed Odak, Valentin Polishchuk, Eliot W. Robson, Casper Moldrup Rysgaard, Jens Kristian Refsgaard Schou, Thomas Shermer, <b>Jack S-J</b>, Rolf Svenning, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2025</span>
+                <span class="pub-comment">Combined paper including "Analytic Arc Cover Problem"</span>
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2407.15981" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2407.15981" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Carving Polytopes with Saws in 3D">Carving Polytopes</span>
-                    </div>
-                    <span class="pub-authors">Eliot W. Robson, <b>Jack S-J</b>, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="Canadian Conference on Computational Geometry">CCCG</abbr>, 2024</span>
-                    
+            <a href="https://arxiv.org/pdf/2407.15981" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2407.15981" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Carving Polytopes with Saws in 3D">Carving Polytopes</span>
                 </div>
-            </a>
+                <span class="pub-authors">Eliot W. Robson, <b>Jack S-J</b>, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="Canadian Conference on Computational Geometry">CCCG</abbr>, 2024</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2409.04074" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2409.04074" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Morphing Planar Graph Drawings via Orthogonal Box Drawings">Morphing Planar Graph Drawings</span>
-                    </div>
-                    <span class="pub-authors">Therese Biedl, Anna Lubiw, <b>Jack S-J</b></span><br>
-                    <span class="pub-venue"><abbr title="International Symposium on Graph Drawing and Network Visualization">GD</abbr>, 2024</span>
-                    
+            <a href="https://arxiv.org/pdf/2409.04074" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2409.04074" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Morphing Planar Graph Drawings via Orthogonal Box Drawings">Morphing Planar Graph Drawings</span>
                 </div>
-            </a>
+                <span class="pub-authors">Therese Biedl, Anna Lubiw, <b>Jack S-J</b></span><br>
+                <span class="pub-venue"><abbr title="International Symposium on Graph Drawing and Network Visualization">GD</abbr>, 2024</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2502.13536" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2502.13536" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Slant/Gokigen Naname is NP-complete, and Some Variations are in P">Slant is NP-complete</span>
-                    </div>
-                    <span class="pub-authors">Jayson Lynch, <b>Jack S-J</b></span><br>
-                    <span class="pub-venue"><abbr title="Canadian Conference on Computational Geometry">CCCG</abbr>, 2024</span>
-                    
+            <a href="https://arxiv.org/pdf/2502.13536" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2502.13536" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Slant/Gokigen Naname is NP-complete, and Some Variations are in P">Slant is NP-complete</span>
                 </div>
-            </a>
+                <span class="pub-authors">Jayson Lynch, <b>Jack S-J</b></span><br>
+                <span class="pub-venue"><abbr title="Canadian Conference on Computational Geometry">CCCG</abbr>, 2024</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol224-socg2022/LIPIcs.SoCG.2022.72/LIPIcs.SoCG.2022.72.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/cgshop2022-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
-            <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol224-socg2022/LIPIcs.SoCG.2022.72/LIPIcs.SoCG.2022.72.pdf" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Conflict-Based Local Search for Minimum Partition into Plane Subgraphs (CG Challenge)">CBLS for Min Partition into Plane Subgraphs</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2022</span>
-                    
+            <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol224-socg2022/LIPIcs.SoCG.2022.72/LIPIcs.SoCG.2022.72.pdf" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol224-socg2022/LIPIcs.SoCG.2022.72/LIPIcs.SoCG.2022.72.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/cgshop2022-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
+                    <span class="pub-title" title="Conflict-Based Local Search for Minimum Partition into Plane Subgraphs (CG Challenge)">CBLS for Min Partition into Plane Subgraphs</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2022</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2103.15062" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/cgshop2021-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2103.15062" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Coordinated Motion Planning Through Randomized k-Opt">Coordinated Motion Planning</span>
-                    </div>
-                    <span class="pub-authors">Paul Liu, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2021</span>
-                    
+            <a href="https://arxiv.org/pdf/2103.15062" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2103.15062" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/cgshop2021-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
+                    <span class="pub-title" title="Coordinated Motion Planning Through Randomized k-Opt">Coordinated Motion Planning</span>
                 </div>
-            </a>
+                <span class="pub-authors">Paul Liu, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2021</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/1911.02040" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/1911.02040" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Angle Covers: Algorithms and Complexity">Angle Covers</span>
-                    </div>
-                    <span class="pub-authors">William Evans, Ellen Gethner, <b>Jack S-J</b>, Alexander Wolff</span><br>
-                    <span class="pub-venue"><abbr title="International Workshop on Algorithms and Computation">WALCOM</abbr>, 2020</span>
-                    
+            <a href="https://arxiv.org/pdf/1911.02040" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/1911.02040" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Angle Covers: Algorithms and Complexity">Angle Covers</span>
                 </div>
-            </a>
+                <span class="pub-authors">William Evans, Ellen Gethner, <b>Jack S-J</b>, Alexander Wolff</span><br>
+                <span class="pub-venue"><abbr title="International Workshop on Algorithms and Computation">WALCOM</abbr>, 2020</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol164-socg2020/LIPIcs.SoCG.2020.83/LIPIcs.SoCG.2020.83.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol164-socg2020/LIPIcs.SoCG.2020.83/LIPIcs.SoCG.2020.83.pdf" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Computing Low-Cost Convex Partitions for Planar Point Sets with Randomized Local Search and Constraint Programming (CG Challenge)">Computing Low-Cost Convex Partitions</span>
-                    </div>
-                    <span class="pub-authors">Da Wei Zheng, <b>Jack S-J</b>, Brandon Zhang</span><br>
-                    <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2020</span>
-                    
+            <a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol164-socg2020/LIPIcs.SoCG.2020.83/LIPIcs.SoCG.2020.83.pdf" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol164-socg2020/LIPIcs.SoCG.2020.83/LIPIcs.SoCG.2020.83.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Computing Low-Cost Convex Partitions for Planar Point Sets with Randomized Local Search and Constraint Programming (CG Challenge)">Computing Low-Cost Convex Partitions</span>
                 </div>
-            </a>
+                <span class="pub-authors">Da Wei Zheng, <b>Jack S-J</b>, Brandon Zhang</span><br>
+                <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2020</span>
+                
+            </div>
         </li>
         </ul><h4>Journal Papers</h4><ul>
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2303.09632" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2303.09632" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Conflict Optimization for Binary CSP Applied to Minimum Partition into Plane Subgraphs and Graph Coloring">Conflict Optimization for Binary CSP</span>
-                    </div>
-                    <span class="pub-authors">Loïc Crombez, Guilherme D. da Fonseca, Florian Fontan, Yan Gerard, Aldo Gonzalez-Lorenzo, Pascal Lafourcade, Luc Libralesso, Benjamin Momège, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="ACM Journal of Experimental Algorithmics">ACM JEA</abbr>, 2023</span>
-                    
+            <a href="https://arxiv.org/pdf/2303.09632" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2303.09632" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Conflict Optimization for Binary CSP Applied to Minimum Partition into Plane Subgraphs and Graph Coloring">Conflict Optimization for Binary CSP</span>
                 </div>
-            </a>
+                <span class="pub-authors">Loïc Crombez, Guilherme D. da Fonseca, Florian Fontan, Yan Gerard, Aldo Gonzalez-Lorenzo, Pascal Lafourcade, Luc Libralesso, Benjamin Momège, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="ACM Journal of Experimental Algorithmics">ACM JEA</abbr>, 2023</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2103.15062" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/cgshop2021-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2103.15062" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Coordinated Motion Planning Through Randomized k-Opt">Coordinated Motion Planning</span>
-                    </div>
-                    <span class="pub-authors">Paul Liu, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="ACM Journal of Experimental Algorithmics">ACM JEA</abbr>, 2022</span>
-                    
+            <a href="https://arxiv.org/pdf/2103.15062" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2103.15062" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/cgshop2021-gitastrophe" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
+                    <span class="pub-title" title="Coordinated Motion Planning Through Randomized k-Opt">Coordinated Motion Planning</span>
                 </div>
-            </a>
+                <span class="pub-authors">Paul Liu, <b>Jack S-J</b>, Brandon Zhang, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="ACM Journal of Experimental Algorithmics">ACM JEA</abbr>, 2022</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://jgaa-v4.cs.brown.edu/index.php/jgaa/article/view/paper576/2380" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://jgaa-v4.cs.brown.edu/index.php/jgaa/article/view/paper576/2380" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Angle Covers: Algorithms and Complexity">Angle Covers</span>
-                    </div>
-                    <span class="pub-authors">William Evans, Ellen Gethner, <b>Jack S-J</b>, Alexander Wolff</span><br>
-                    <span class="pub-venue"><abbr title="Journal of Graph Algorithms and Applications">JGAA</abbr>, 2021</span>
-                    
+            <a href="https://jgaa-v4.cs.brown.edu/index.php/jgaa/article/view/paper576/2380" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://jgaa-v4.cs.brown.edu/index.php/jgaa/article/view/paper576/2380" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Angle Covers: Algorithms and Complexity">Angle Covers</span>
                 </div>
-            </a>
+                <span class="pub-authors">William Evans, Ellen Gethner, <b>Jack S-J</b>, Alexander Wolff</span><br>
+                <span class="pub-venue"><abbr title="Journal of Graph Algorithms and Applications">JGAA</abbr>, 2021</span>
+                
+            </div>
         </li>
         </ul><h4>Theses</h4><ul>
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://uwspace.uwaterloo.ca/bitstream/handle/10012/20172/Spalding-Jamieson_Jack.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://uwspace.uwaterloo.ca/bitstream/handle/10012/20172/Spalding-Jamieson_Jack.pdf" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Graph Morphing via Orthogonal Box Drawings">Graph Morphing via Orthogonal Box Drawings</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b></span><br>
-                    <span class="pub-venue"><abbr title="University of Waterloo">University of Waterloo</abbr>, 2023</span>
-                    
+            <a href="https://uwspace.uwaterloo.ca/bitstream/handle/10012/20172/Spalding-Jamieson_Jack.pdf" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://uwspace.uwaterloo.ca/bitstream/handle/10012/20172/Spalding-Jamieson_Jack.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="Graph Morphing via Orthogonal Box Drawings">Graph Morphing via Orthogonal Box Drawings</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b></span><br>
+                <span class="pub-venue"><abbr title="University of Waterloo">University of Waterloo</abbr>, 2023</span>
+                
+            </div>
         </li>
         </ul><h4>Workshop Papers and Others</h4><ul>
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2412.15567" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2412.15567" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="The Analytic Arc Cover Problem and its Applications to Contiguous Art Gallery, Polygon Separation, and Shape Carving">Analytic Arc Cover Problem</span>
-                    </div>
-                    <span class="pub-authors">Eliot W. Robson, <b>Jack S-J</b>, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="European Workshop on Computational Geometry">EuroCG</abbr>, 2025</span>
-                    
+            <a href="https://arxiv.org/pdf/2412.15567" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2412.15567" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="The Analytic Arc Cover Problem and its Applications to Contiguous Art Gallery, Polygon Separation, and Shape Carving">Analytic Arc Cover Problem</span>
                 </div>
-            </a>
+                <span class="pub-authors">Eliot W. Robson, <b>Jack S-J</b>, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="European Workshop on Computational Geometry">EuroCG</abbr>, 2025</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2502.06163" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/mopbucket" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
-            <a href="https://arxiv.org/pdf/2502.06163" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Scalable k-Means Clustering for Large k via Seeded Approximate Nearest-Neighbor Search">Scalable k-Means Clustering for Large k</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b>, Eliot W. Robson, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="Workshop on Vector Databases @ ICML">VecDB@ICML</abbr>, 2025</span>
-                    
+            <a href="https://arxiv.org/pdf/2502.06163" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://arxiv.org/pdf/2502.06163" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/mopbucket" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
+                    <span class="pub-title" title="Scalable k-Means Clustering for Large k via Seeded Approximate Nearest-Neighbor Search">Scalable k-Means Clustering for Large k</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b>, Eliot W. Robson, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="Workshop on Vector Databases @ ICML">VecDB@ICML</abbr>, 2025</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://www.cs.tufts.edu/research/geometry/FWCG24/papers/FWCG_24_paper_31.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
-            <a href="https://www.cs.tufts.edu/research/geometry/FWCG24/papers/FWCG_24_paper_31.pdf" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="MOPBucket: A Massively OP Algorithm for k-means Clustering Bucketloads of Data">MOPBucket</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b>, Eliot W. Robson, Da Wei Zheng</span><br>
-                    <span class="pub-venue"><abbr title="Fall Workshop on Computational Geometry">FWCG</abbr>, 2024</span>
-                    
+            <a href="https://www.cs.tufts.edu/research/geometry/FWCG24/papers/FWCG_24_paper_31.pdf" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://www.cs.tufts.edu/research/geometry/FWCG24/papers/FWCG_24_paper_31.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span></div>
+                    <span class="pub-title" title="MOPBucket: A Massively OP Algorithm for k-means Clustering Bucketloads of Data">MOPBucket</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b>, Eliot W. Robson, Da Wei Zheng</span><br>
+                <span class="pub-venue"><abbr title="Fall Workshop on Computational Geometry">FWCG</abbr>, 2024</span>
+                
+            </div>
         </li>
         
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"><span class="icon-wrapper"><a href="https://jacksj.com/docstore/papers/Battleship-TJCDCGGG-paper.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/battleship_enumeration" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
-            <a href="https://jacksj.com/docstore/papers/Battleship-TJCDCGGG-paper.pdf" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="Computing the Probability of Striking a Battleship">Computing the Probability of Striking a Battleship</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b></span><br>
-                    <span class="pub-venue"><abbr title="Thailand-Japan Conference on Discrete and Computational Geometry, Graphs, and Games">TJCDCGGG</abbr>, 2021</span>
-                    
+            <a href="https://jacksj.com/docstore/papers/Battleship-TJCDCGGG-paper.pdf" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"><span class="icon-wrapper"><a href="https://jacksj.com/docstore/papers/Battleship-TJCDCGGG-paper.pdf" target="_blank"><img src="pdf_icon.png" alt="PDF" width="16"></a></span> <span class="icon-wrapper"><a href="https://github.com/jacketsj/battleship_enumeration" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
+                    <span class="pub-title" title="Computing the Probability of Striking a Battleship">Computing the Probability of Striking a Battleship</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b></span><br>
+                <span class="pub-venue"><abbr title="Thailand-Japan Conference on Discrete and Computational Geometry, Graphs, and Games">TJCDCGGG</abbr>, 2021</span>
+                
+            </div>
         </li>
         </ul><h4>Software</h4><ul>
         <li class="roundbox clickable-pub">
-            <div class="pub-links-absolute"> <span class="icon-wrapper"><a href="https://github.com/jacketsj/expANN" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
-            <a href="https://github.com/jacketsj/expANN" target="_blank" class="pub-main-link">
-                <div class="pub-entry">
-                    <div class="pub-header">
-                        <div class="pub-links-space"></div>
-                        <span class="pub-title" title="expANN - Fast In-Memory Approximate Nearest Neighbour Experiment Library">expANN - Approximate Nearest Neighbour Experiments</span>
-                    </div>
-                    <span class="pub-authors"><b>Jack S-J</b></span><br>
-                    <span class="pub-venue">2024</span>
-                    <span class="pub-comment">As far as I know, in 2024, this was the best in-memory ANN library not relying on per-vertex quantization, at least the SIFT1M dataset, in terms of recall vs latency</span>
+            <a href="https://github.com/jacketsj/expANN" target="_blank" class="pub-bg-link"></a>
+            <div class="pub-entry">
+                <div class="pub-header">
+                    <div class="pub-links"> <span class="icon-wrapper"><a href="https://github.com/jacketsj/expANN" target="_blank"><img src="code_icon.png" alt="Code" width="16"></a></span></div>
+                    <span class="pub-title" title="expANN - Fast In-Memory Approximate Nearest Neighbour Experiment Library">expANN - Approximate Nearest Neighbour Experiments</span>
                 </div>
-            </a>
+                <span class="pub-authors"><b>Jack S-J</b></span><br>
+                <span class="pub-venue">2024</span>
+                <span class="pub-comment">As far as I know, in 2024, this was the best in-memory ANN library not relying on per-vertex quantization, at least the SIFT1M dataset, in terms of recall vs latency</span>
+            </div>
         </li>
         </ul>
         </div>
