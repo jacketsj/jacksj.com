@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Title: Point Separation Problems in the Plane -->
+    <!-- Author: Jack Spalding-Jamieson -->
+    <title>Point Separation Problems in the Plane</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+
+    <style>
+        .reveal {
+            font-size: 24px;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            line-height: 1.2;
+            margin-bottom: 0.5em;
+        }
+        .reveal h2 {
+            font-size: 2.2em;
+        }
+        .reveal h3 {
+            font-size: 1.6em;
+        }
+        .reveal p {
+            margin-bottom: 0.5em;
+        }
+        .reveal img {
+            max-height: 500px;
+            max-width: 100%;
+        }
+        
+    </style>
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    defn: ['{\\textbf{#1}}', 1],
+                    cC: '{\\mathcal{C}}',
+                    c: '{\\gamma}',
+                    cCC: '{\\mathcal{C}^*}',
+                    Zt: '{\\mathbb{Z}_2}',
+                    HC: '{\\mathbb{HC}}',
+                    R: '{\\mathbb{R}}',
+                    query: ['{\\text{query}(#1)}', 1],
+                    mapsize: ['{\\text{MS}(#1)}', 1],
+                    si: ['{\\text{SI}(#1)}', 1],
+                    plane: '{\\overline{\\R^2}}',
+                    lO: '{\\widetilde{O}}'
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="reveal extra-short-version">
+        <div class="slides">
+
+<!-- Title Slide - Short Version -->
+<section class="short-only">
+    <h2>Point Separation Problems in the Plane: Improved Upper and Lower Bounds</h2>
+    <p style="font-size: 1.8em"><strong>Jack Spalding-Jamieson</strong>, Anurag Murty Naredla</p>
+    <hr>
+</section>
+
+<!-- Title Slide - Full Version -->
+<section class="long-only">
+    <h2>Point Separation Problems in the Plane</h2>
+    <p style="font-size: 1.8em"><strong>Jack Spalding-Jamieson</strong></p>
+    <hr>
+    <p style="font-size: 1.8em"><strong>Part 1: Improved Upper and Lower Bounds</strong> <small>(with Anurag Murty Naredla)</small><br>
+    <em><small>ESA 2025</small></em></p>
+    <p style="font-size: 1.8em"><strong>Part 2: Subquadratic Approximation Algorithms</strong> <small>(with Jayson Lynch)</small><br>
+    <em><small>Preprint</small></em></p>
+    <hr>
+</section>
+
+<!-- TODO Need a simple "part 1" title slide -->
+
+<section>
+    <h3>Point Separation: Problem</h3>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 2em;">
+        <img src="graphics/svg_figures/example-curves-small_page_4.svg" alt="Problem setup" style="height: 400px; width: auto;">
+        <img class="fragment" src="graphics/svg_figures/example-curves-small_page_6.svg" alt="Problem with solution" style="height: 400px; width: auto;">
+    </div>
+    <p style="font-size: 1.1em"><strong>Input:</strong> Two points $s,t\in\mathbb{R}^2$ and obstacles $\mathcal{C}$</p>
+    <p style="font-size: 1.1em" class="fragment"><strong>Output:</strong> Minimum-weight set in $\mathcal{C}$ whose union separates $s$ and $t$</p>
+</section>
+
+<!--
+\begin{frame}{Point Separation: Problem}
+\vcentered{\centering
+\includegraphics[scale=0.6,page=4]{example-curves-small}\onslide<2->{\hspace{3em}
+\includegraphics[scale=0.6,page=6]{example-curves-small}}
+}
+
+\vspace{0.3em}
+\textbf{Input:} Two points $s,t\in\R^2$ and obstacles $\cC$  \\
+\onslide<2->{\textbf{Output:} Minimum-weight set in $\cC$ whose union separates $s$ and $t$}
+\end{frame}
+-->
+
+<section>
+  <h3>Models</h3>
+  <div style="display: flex; align-items: center; gap: 2em;">
+    <div style="flex: 40%; font-size: 0.8em;">
+      <!-- Sub-slide 1: visible + current on load -->
+      <p style="font-size: 1.4em">
+        <span class="fragment highlight-current-red visible current-fragment" data-fragment-index="0">
+          <strong>Specific objects:</strong>
+        </span>
+        Obstacles from a fixed family (e.g., disks, unit disks, line segments).
+      </p>
+
+      <!-- Sub-slide 2 -->
+      <p style="font-size: 1.4em" class="fragment" data-fragment-index="1">
+        <span class="fragment highlight-current-red" data-fragment-index="1"><strong>Arrangement model:</strong></span>
+        Build arrangement $D$ of obstacles; reason on its vertices/edges.
+      </p>
+
+      <!-- Sub-slide 3 -->
+      <p style="font-size: 1.4em" class="fragment" data-fragment-index="2">
+        <span class="fragment highlight-current-red" data-fragment-index="2"><strong>Oracle model:</strong></span>
+        Assume existence of oracle that says if two objects intersect, and also relates to $s$ and $t$.
+      </p>
+    </div>
+
+    <div style="flex: 58%; display: flex; justify-content: center; align-items: center;">
+      <div class="r-stack">
+        <!-- Visible on load; fades out at step 1 -->
+        <img class="fragment fade-out visible" data-fragment-index="1"
+             src="graphics/svg_figures/example-curves-disks_page_4.svg" alt="Specific objects"
+             style="height: 400px; width: auto;">
+
+        <!-- Shows at step 1; hides again at step 2 -->
+        <img class="fragment current-visible" data-fragment-index="1"
+             src="graphics/svg_figures/example-curves-small_page_3.svg" alt="Arrangement model"
+             style="height: 400px; width: auto;">
+
+        <!-- Replaces images at step 2 -->
+        <div class="fragment current-visible" data-fragment-index="2"
+             style="font-size: 1.0em; border: 1px solid #ccc; padding: 8px; text-align: left;">
+          <h4>Oracle</h4>
+          <p>Fix canonical points $x_{\gamma}$ for each obstacle $\gamma$, and a path $\pi$ from $s$ to $t$.</p>
+          <p><strong>Input:</strong> $\gamma_1,\gamma_2$, value $b\in\{0,1\}$</p>
+          <p><strong>Output:</strong> Path exists from $x_{\gamma_1}$ to $x_{\gamma_2}$ in $\gamma_1\cup\gamma_2$ crossing $\pi$ $b$ times, modulo $2$?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--
+\begin{frame}{Models}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.40\textwidth}
+  \small
+  \textbf{\textcolor<1>{red}{Specific objects:}} Obstacles from a fixed family (e.g., disks, unit disks, line segments).\\\vspace{1em}
+  \onslide<2->{\textbf{\textcolor<2>{red}{Arrangement model:}} Build arrangement $D$ of obstacles; reason on its vertices/edges.}\\\vspace{1em}
+  \onslide<3->{\textbf{\textcolor<3>{red}{Oracle model:}} Assume existence of oracle that says if two objects intersect, and also relates to $s$ and $t$.}
+  
+  \column{0.58\textwidth}
+  \centering
+\only<1>{\includegraphics[scale=0.6,page=4]{graphics/example-curves-disks}}
+\only<2>{\includegraphics[scale=0.6,page=3]{current_arXiv/figures/example-curves-small}}
+\only<3>{\begin{definition}[Oracle]
+Fix canonical points $x_{\gamma}$ for each obstacle $\gamma$, and a path $\pi$ from $s$ to $t$.\\
+\textbf{Input:} $\gamma_1,\gamma_2$, value $b\in\{0,1\}$\\
+\textbf{Output:} Path exists from $x_{\gamma_1}$ to $x_{\gamma_2}$ in $\gamma_1\cup\gamma_2$ crossing $\pi$ $b$ times, modulo $2$?
+\end{definition}}
+\end{columns}
+\end{frame}
+-->
+
+<section>
+    <h3>Results: Arrangement and Oracle Models</h3>
+    <table style="margin: 0 auto; font-size: 1.5em;">
+        <thead>
+            <tr>
+                <th><strong>Model</strong></th>
+                <th><strong>Weights</strong></th>
+                <th><strong>Previous</strong></th>
+                <th><strong>Our Result</strong></th>
+                <th><strong>Lower Bounds</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Oracle</td>
+                <td>Yes</td>
+                <td>$O(n^3)$</td>
+                <td>$\widetilde{O}(n^{(3+\omega)/2})$</td>
+                <td>$\Omega^*(n^2)$</td>
+            </tr>
+            <tr>
+                <td>Oracle</td>
+                <td>No</td>
+                <td>$O(n^3)$</td>
+                <td>$O(n^\omega\log n)$</td>
+                <td>$\Omega^*(n^{3/2})$</td>
+            </tr>
+            <tr>
+                <td>Arrangement</td>
+                <td>Yes</td>
+                <td>$O(km^2\lg k)$</td>
+                <td>$O(km+k^2\lg k)$</td>
+                <td>$\Omega^*(km)$</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size: 1.2em; margin-top: 1em;">$\omega \approx 2.373$. $k$ = arrangement vertices; $m$ = obstacle–vertex incidences.</p>
+    <p class="fragment" style="margin-top: 1em; font-size: 1.2em">High-level method: Reduce to APSP in a special graph.</p>
+</section>
+
+<!--
+\section{Results Overview}
+
+\centering
+\begin{frame}{Results: Arrangement and Oracle Models}
+\begin{table}
+\centering
+\small
+\begin{tabular}{llccc}
+\toprule
+\textbf{Model} & \textbf{Weights} & \textbf{Previous} & \textbf{Our Result} & \textbf{Lower Bounds} \\
+\midrule
+Oracle & Yes & $O(n^3)$ & $\lO(n^{(3+\omega)/2})$ & $\Omega^*(n^2)$ \\
+Oracle & No & $O(n^3)$ & $O(n^\omega\log n)$ & $\Omega^*(n^{3/2})$ \\
+Arrangement & Yes & $O(km^2\lg k)$ & $O(km+k^2\lg k)$ & $\Omega^*(km)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{1em}
+{\small $\omega \approx 2.373$. $k$ = arrangement vertices; $m$ = obstacle–vertex incidences.}\\
+\vspace{1em}\pause
+High-level method: Reduce to APSP in a special graph.\\\vspace{1em}
+%\emph{different} geometric intersection graph with $2n$ objects.\\\vspace{1em}\pause
+%High-level method (these specifically): Leverage very general APSP results.
+\end{frame}
+-->
+
+<section>
+    <h3>Results: <span style="color: red;">Unweighted</span> Specific Objects</h3>
+    <table style="margin: 0 auto; font-size: 1.5em;">
+        <thead>
+            <tr>
+                <th><strong>Object Type</strong></th>
+                <th><strong>Previous</strong></th>
+                <th><strong>Our Result</strong></th>
+                <th><strong>Lower Bounds</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Segments</td>
+                <td>$O(n^3)$</td>
+                <td>$O(n^{7/3}\log^{1/3}n)$</td>
+                <td>$\Omega^*(n^{3/2})$</td>
+            </tr>
+            <tr>
+                <td>Axis-aligned segments</td>
+                <td>$O(n^3)$</td>
+                <td>$O(n^2\log\log n)$</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Disks</td>
+                <td>$O(n^3)$</td>
+                <td>$O(n^2\log n)$</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Unit disks</td>
+                <td>$O(n^2\log^3 n)$</td>
+                <td>$O(n^2\log n)$</td>
+                <td>None</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="fragment" style="margin-top: 1.2em; font-size: 1.2em">High-level method: Solve static intersection problems in the "homology cover space".</p>
+</section>
+
+<!--
+\begin{frame}{Results: \textcolor{red}{Unweighted} Specific Objects}
+\begin{table}
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Object Type} & \textbf{Previous} & \textbf{Our Result} & \textbf{Lower Bounds} \\
+\midrule
+Segments & $O(n^3)$ & $O(n^{7/3}\log^{1/3}n)$ & $\Omega^*(n^{3/2})$ \\
+Axis-aligned segments & $O(n^3)$ & $O(n^2\log\log n)$ & None \\
+Disks & $O(n^3)$ & $O(n^2\log n)$ & None \\
+Unit disks & $O(n^2\log^3 n)$ & $O(n^2\log n)$ & None \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{1em}\pause
+High-level method: Solve static intersection problems in the ``homology cover space''.
+\end{frame}
+-->
+
+<section>
+    <h3>Results: <span style="color: red;">Weighted</span> Specific Objects</h3>
+    <table style="margin: 0 auto; font-size: 1.5em;">
+        <thead>
+            <tr>
+                <th><strong>Object Type</strong></th>
+                <th><strong>Previous</strong></th>
+                <th><strong>Our Result</strong></th>
+                <th><strong>Lower Bounds</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Segments</td>
+                <td>$O(n^3)$</td>
+                <td>$\widetilde{O}(n^{7/3})$</td>
+                <td>$\Omega^*(n^2)$</td>
+            </tr>
+            <tr>
+                <td>Axis-aligned segments</td>
+                <td>$O(n^3)$</td>
+                <td>$\widetilde{O}(n^2)$</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Rectilinear polylines</td>
+                <td>$O(n^3)$</td>
+                <td>$\widetilde{O}(n^2)$</td>
+                <td>$\Omega^*(n^2)$</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="fragment" style="margin-top: 1em;">High-level method: Biclique covers for sparse graph representation.</p>
+</section>
+
+<!--
+\begin{frame}{Results: \textcolor{red}{Weighted} Specific Objects}
+\begin{table}
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Object Type} & \textbf{Previous} & \textbf{Our Result} & \textbf{Lower Bounds} \\
+\midrule
+Segments & $O(n^3)$ & $\lO(n^{7/3})$ & $\Omega^*(n^2)$ \\
+Axis-aligned segments & $O(n^3)$ & $\lO(n^2)$ & None \\
+Rectilinear polylines & $O(n^3)$ & $\lO(n^2)$ & $\Omega^*(n^2)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{1em}\pause
+High-level method: Biclique covers for sparse graph representation.
+\end{frame}
+-->
+
+<section>
+    <h3>Geometric Intersection Graphs</h3>
+    <div style="display: flex; align-items: center;">
+        <div style="flex: 45%; font-size: 1.1em;">
+            <p><strong>Geometric Intersection Graph:</strong></p>
+            <ul>
+                <li>Vertices: Geometric objects (e.g. disks)</li>
+                <li>Edges: Pairwise-intersecting geometric objects</li>
+            </ul>
+            <div class="fragment" style="margin-top: 2em;">
+                <p><strong>Equivalent definition:</strong></p>
+                <ul>
+                    <li>Vertices: Specified points on each geometric object</li>
+                    <li>Edges: Path exists through object pair between specified points</li>
+                </ul>
+            </div>
+        </div>
+        <div style="flex: 55%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves-contrast_page_24.svg" alt="Geometric intersection graph example" style="height: 600px;">
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Geometric Intersection Graphs}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.60\textwidth}
+  \textbf{Geometric Intersection Graph}:
+  \begin{itemize}
+    \item Vertices: Geometric objects (e.g. disks)
+    \item Edges: Pairwise-intersecting geometric objects
+  \end{itemize}
+  \vspace{2em}
+\onslide<2->{
+  \textbf{Equivalent definition}:
+  \begin{itemize}
+    \item Vertices: Specified points on each geometric object
+    \item Edges: Path exists through object pair between specified points
+  \end{itemize}
+}
+  
+  \column{0.40\textwidth}
+  \centering
+  \includegraphics[scale=0.5,page=24]{example-curves}
+\end{columns}
+\todo[inline]{Should add better contrast in figure for this slide}
+\end{frame}
+-->
+
+<section>
+    <h3>Point-in-Polygon Characterization</h3>
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+        <div style="margin-bottom: 2em;">
+            <img src="graphics/svg_figures/point-in-polygon-figure_page_1.svg" alt="Point in polygon characterization" style="height: 300px;">
+        </div>
+        <p style="font-size: 1.2em;">Ray crosses polygon odd # times ⟺ point inside</p>
+    </div>
+</section>
+
+<!--
+\section{The Homology Cover Space}
+
+\begin{frame}{Point-in-Polygon Characterization}
+\vcentered{\centering
+\includegraphics[scale=1.2,page=1]{point-in-polygon-figure}}
+
+Ray crosses polygon odd \# times $\Leftrightarrow$ point inside
+\end{frame}
+-->
+
+<section>
+    <h3>Point-Pair Separation by Polygon</h3>
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+        <div style="margin-bottom: 2em;">
+            <div class="r-stack">
+                <img src="graphics/svg_figures/point-in-polygon-figure_page_2.svg" alt="Point-pair separation by polygon step 1" class="fragment fade-out" data-fragment-index="1" style="height: 350px;">
+                <img src="graphics/svg_figures/point-in-polygon-figure_page_3.svg" alt="Point-pair separation by polygon step 2" class="fragment fade-in-then-out" data-fragment-index="1" style="height: 350px;">
+                <img src="graphics/svg_figures/point-in-polygon-figure_page_4.svg" alt="Point-pair separation by polygon step 3" class="fragment fade-in" data-fragment-index="2" style="height: 350px;">
+            </div>
+        </div>
+        <div style="font-size: 1.2em;">
+            <div class="r-stack">
+                <p class="fragment fade-out" data-fragment-index="1">Segment crosses polygon odd # times ⟺ polygon separates endpoints</p>
+                <p class="fragment fade-in-then-out" data-fragment-index="1"><span style="color: red;">Path</span> crosses polygon odd # times ⟺ polygon separates endpoints</p>
+                <p class="fragment fade-in" data-fragment-index="2"><span style="color: red;">Path</span> crosses <span style="color: red;">curve</span> odd # times ⟺ <span style="color: red;">curve</span> separates endpoints</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Point-Pair Separation by Polygon}
+\vcentered{\centering
+  \only<1>{\includegraphics[scale=1.2,page=2]{point-in-polygon-figure}}
+  \only<2>{\includegraphics[scale=1.2,page=3]{point-in-polygon-figure}}
+  \only<3->{\includegraphics[scale=1.2,page=4]{point-in-polygon-figure}}
+}
+
+\only<1>{Segment}%
+\only<2->{\st{Segment} \textcolor{red}{Path}}
+crosses
+\only<1-2>{polygon}%
+\only<3>{\st{polygon} \textcolor{red}{curve}}
+odd \# times $\Leftrightarrow$
+\only<1-2>{polygon}%
+\only<3>{\st{polygon} \textcolor{red}{curve}}
+separates endpoints
+\end{frame}
+-->
+
+<section>
+    <h3>Point Separation is a Curve-Finding Problem</h3>
+    <div style="text-align: center; display: flex; justify-content: center; align-items: center; height: 100%;">
+        <div style="display: flex; gap: 3em; align-items: center;">
+            <img src="graphics/svg_figures/example-curves-small_page_6.svg" alt="Problem example" style="height: 400px;">
+            <img src="graphics/svg_figures/example-curves-small_page_5.svg" alt="Solution as curve" class="fragment" style="height: 400px;">
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Point Separation is a Curve-Finding Problem}
+\includegraphics[scale=0.6,page=6]{example-curves-small}\pause
+\hspace{3em}
+\includegraphics[scale=0.6,page=5]{example-curves-small}
+\end{frame}
+-->
+
+<section>
+  <h3>The Homology Cover Space</h3>
+  <div style="display: flex; justify-content: center; align-items: flex-start; gap: 2rem;">
+    <!-- LEFT COLUMN (39%) -->
+    <div style="flex: 0 0 39%; text-align: center;">
+      <img src="graphics/svg_figures/point-in-polygon-figure_page_7.svg" alt="Plane" style="height: 300px;">
+
+      <div class="r-stack" style="margin-top: 0.5em;">
+        <p class="fragment fade-out" data-fragment-index="1">The plane</p>
+        <p class="fragment fade-in-then-out" data-fragment-index="1">The plane <span style="color: red;">(no \(s\) or \(t\))</span></p>
+        <p class="fragment fade-in" data-fragment-index="2">The plane (no \(s\) or \(t\))</p>
+      </div>
+
+      <div class="r-stack" style="margin-top: 0.5em;">
+        <p class="fragment fade-out" data-fragment-index="1">\( \mathbb{R}^2 \)</p>
+        <p class="fragment fade-in" data-fragment-index="1">\( \mathbb{R}^2 \setminus \{s,t\} \)</p>
+      </div>
+
+      <p style="margin-top: 0.5em;">Connectivity: Normal</p>
+    </div>
+
+    <!-- RIGHT COLUMN (59%) -->
+    <div style="flex: 0 0 59%; text-align: center;">
+      <div class="fragment" data-fragment-index="3">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+          <img src="graphics/svg_figures/point-in-polygon-figure_page_7.svg" alt="Cover sheet 1" style="height: 300px;">
+          <img src="graphics/svg_figures/point-in-polygon-figure_page_7.svg" alt="Cover sheet 2" style="height: 300px;">
+        </div>
+        <p style="margin-top: 0.5em;">The homology cover space</p>
+        <p>\(\left(\mathbb{R}^2 \setminus \{s,t\}\right) \times \{0,1\}\)</p>
+      </div>
+
+      <p class="fragment" data-fragment-index="4">Connectivity: Normal, <span style="color: red;">except at \( \pi \)</span></p>
+    </div>
+  </div>
+</section>
+
+<!--
+\begin{frame}{The Homology Cover Space}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.39\textwidth}
+  \begin{center}
+    \includegraphics[scale=0.8,page=7]{point-in-polygon-figure}\\[4pt]
+  \only<1>{The plane}%
+  \only<2>{The plane \textcolor{red}{(no $s$ or $t$)}}%
+  \only<3->{The plane (no $s$ or $t$)}\\[4pt]
+  \only<1>{$\mathbb{R}^2$}%
+  \only<2->{$\mathbb{R}^2\setminus\{s,t\}$}\\[4pt]
+  Connectivity: Normal
+  \end{center}
+
+  \column{0.59\textwidth}
+  \begin{center}
+  \onslide<3->{%
+  \includegraphics[scale=0.8,page=7]{point-in-polygon-figure}%
+  \hspace{1em}%
+  \includegraphics[scale=0.8,page=7]{point-in-polygon-figure}\\[4pt]
+  The homology cover space\\[4pt]
+  $\left(\mathbb{R}^2\setminus\{s,t\}\right)\times\{0,1\}$\\[4pt]
+  }
+  \onslide<4->{
+  Connectivity: Normal, \textcolor{red}{except at $\pi$}
+  }
+  \end{center}
+\end{columns}
+\end{frame}
+-->
+
+<section>
+    <h3>Walking around in the Homology Cover Space</h3>
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+        <div style="margin-bottom: 1em;">
+            <img src="assets/animation/hc_portal_trail.svg" alt="Walking around in homology cover space animation" style="height: 700px;">
+        </div>
+        <p style="font-size: 1.2em;">$\pi$ is a portal.</p>
+    </div>
+</section>
+
+<!--
+\begin{frame}[plain]{Walking around in the Homology Cover Space}
+\centering
+\vspace*{\fill}
+% corresponds to assets/animation/hc_portal_trail.svg
+\animategraphics[loop,autoplay,width=\textwidth,method=widget]{30}{graphics/animations/homology-cover-walkthrough-trail/frame_}{0000}{1439}
+\vspace*{\fill}
+$\pi$ is a portal.
+\todo[inline]{Add safety hyperlink to svg stored online.}
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>The Homology Cover Space: Portal Construction</h3>
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+        <div style="margin-bottom: 2em;">
+            <img src="graphics/svg_figures/point-in-polygon-figure_page_16.svg" alt="Portal construction" style="height: 400px;">
+        </div>
+        <p style="font-size: 1.2em;">Obstacles connect through portals between the two copies</p>
+    </div>
+</section>
+
+<!--
+\begin{frame}{The Homology Cover Space: Portal Construction}
+\vcentered{\centering
+\includegraphics[scale=0.6,page=16]{point-in-polygon-figure}}
+
+Obstacles connect through portals between the two copies
+\end{frame}
+-->
+
+<section>
+    <h3>Non-Separating Curves in the Plane/Homology Cover</h3>
+    <div style="display: flex; align-items: center; justify-content: center; height: 100%; gap: 2em;">
+        <div style="flex: 49%; text-align: center;">
+            <img src="assets/animation/curve_separation_1_plane.svg" alt="Non-separating curve in plane" style="height: 500px;">
+        </div>
+        <div style="flex: 49%; text-align: center;">
+            <img src="assets/animation/curve_separation_2_homology_cover.svg" alt="Non-separating curve in homology cover" style="height: 500px;">
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Non-Separating Curves in the Plane/Homology Cover}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.49\textwidth}
+\vcentered{\centering
+% corresponds to assets/animation/curve_separation_1_plane.svg
+\animategraphics[loop,autoplay,width=0.75\textwidth]{30}{graphics/animations/curve_separation_1_plane/frame_}{0000}{0239}
+}
+  \column{0.49\textwidth}
+%\only<2->
+{\vcentered{\centering
+\animategraphics[loop,autoplay,width=0.75\textwidth]{30}{graphics/animations/curve_separation_2_homology_cover/frame_}{0000}{0239}
+}}
+\end{columns}
+\todo[inline]{Add safety hyperlink to svg stored online.}
+\end{frame}
+-->
+
+<section>
+    <h3>Separating Curves in the Plane/Homology Cover</h3>
+    <div style="display: flex; align-items: center; justify-content: center; height: 100%; gap: 2em;">
+        <div style="flex: 49%; text-align: center;">
+            <img src="assets/animation/curve_separation_3_separating_plane.svg" alt="Separating curve in plane" style="height: 500px;">
+        </div>
+        <div style="flex: 49%; text-align: center;">
+            <img src="assets/animation/curve_separation_4_separating_homology_cover.svg" alt="Separating curve in homology cover" style="height: 500px;">
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Separating Curves in the Plane/Homology Cover}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.49\textwidth}
+\vcentered{\centering
+\animategraphics[loop,autoplay,width=0.75\textwidth]{30}{graphics/animations/curve_separation_3_separating_plane/frame_}{0000}{0239}
+}
+  \column{0.49\textwidth}
+%\only<2->
+{\vcentered{\centering
+\animategraphics[loop,autoplay,width=0.75\textwidth]{30}{graphics/animations/curve_separation_4_separating_homology_cover/frame_}{0000}{0239}
+}}
+\end{columns}
+\todo[inline]{Add safety hyperlink to svg stored online.}
+\end{frame}
+-->
+
+<section>
+    <h3>Mapping an object into the Homology Cover</h3>
+    <p style="text-align: center; font-size: 1.3em; margin-bottom: 1em;">Each object in the plane induces <em>2</em> objects in the homology cover.</p>
+    <div style="display: flex; gap: 3em; justify-content: center; align-items: flex-start; height: 70vh;">
+        <div style="flex: 1; text-align: center;">
+            <!-- Column 1: Pages 5-6, then 6 stays permanently -->
+            <div class="r-stack">
+                <div class="fragment fade-out" data-fragment-index="1">
+                    <img src="graphics/svg_figures/segment-algorithm_page_5.svg" style="height: 600px;">
+                </div>
+                <div class="fragment fade-in" data-fragment-index="1">
+                    <img src="graphics/svg_figures/segment-algorithm_page_6.svg" style="height: 600px;">
+                </div>
+            </div>
+        </div>
+        <div style="flex: 1; text-align: center;">
+            <!-- Column 2: Empty until page 7, then pages 7-12 -->
+            <div class="r-stack">
+                <div class="fragment fade-out" data-fragment-index="3">
+                    <!-- Empty space for first two sub-slides -->
+                </div>
+                <div class="fragment fade-in-then-out" data-fragment-index="3">
+                    <img src="graphics/svg_figures/segment-algorithm_page_7.svg" style="height: 600px;">
+                </div>
+                <div class="fragment fade-in-then-out" data-fragment-index="4">
+                    <img src="graphics/svg_figures/segment-algorithm_page_8.svg" style="height: 600px;">
+                </div>
+                <div class="fragment fade-in-then-out" data-fragment-index="5">
+                    <img src="graphics/svg_figures/segment-algorithm_page_9.svg" style="height: 600px;">
+                </div>
+                <div class="fragment fade-in-then-out" data-fragment-index="6">
+                    <img src="graphics/svg_figures/segment-algorithm_page_10.svg" style="height: 600px;">
+                </div>
+                <div class="fragment fade-in-then-out" data-fragment-index="7">
+                    <img src="graphics/svg_figures/segment-algorithm_page_11.svg" style="height: 600px;">
+                </div>
+                <div class="fragment fade-in" data-fragment-index="8">
+                    <img src="graphics/svg_figures/segment-algorithm_page_12.svg" style="height: 600px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+%\begin{frame}{Exercise: Closer pair}
+%\todo[inline]{Add a sequence of 3 or so figures of two points in the homology cover space here, asking if they are near or far each time. 6 slides total.\\
+%Better idea later: Hard to say what ``near'' vs ``far'' means. Maybe just add a pair of blue points and a pair of red points and ask which pair is closer together, or if they are the same? Also give a ``solution'' slide that shows the shortest-path.}
+%\end{frame}
+
+\begin{frame}{Mapping an object into the Homology Cover}
+Each object in the plane induces \emph{$2$} objects in the homology cover.
+\todo[inline]{Add some figures here.
+First, a disk in the plane that does not intersect $\overline{st}$.
+Show the first disk in the homology cover that it maps to, then show the second.\\
+In the same figure (new colour), add a disk that does cross $\overline{st}$.
+Then do the first/second induced disk in the homology cover thing.\\
+Each time, make sure to show the canonical points in both the plane and the homology cover.
+}
+\end{frame}
+-->
+
+<!--
+<section>
+    <h3>Obstacles in the Homology Cover: Arrangement Ver.</h3>
+    <div style="display: flex; align-items: center; justify-content: center; height: 100%; gap: 2em;">
+        <div style="flex: 49%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves-small_page_1.svg" alt="Obstacles in plane" style="height: 400px;">
+        </div>
+        <div style="flex: 49%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves-small_page_11.svg" alt="Obstacles in homology cover arrangement" class="fragment" style="height: 500px;">
+        </div>
+    </div>
+</section>
+-->
+
+<!--
+\section{Obstacles in the Homology Cover}
+
+\begin{frame}{Obstacles in the Homology Cover: Arrangement Ver.}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.49\textwidth}
+  \centering
+  \includegraphics[scale=0.6]{example-curves-small}\pause
+  
+  \column{0.49\textwidth}
+  \centering
+  \includegraphics[scale=0.45,page=11]{example-curves-small}
+\end{columns}
+\end{frame}
+-->
+
+<section>
+    <h3>Obstacles in the Homology Cover: Oracle Ver.</h3>
+    <div style="display: flex; align-items: center; justify-content: center; height: 100%; gap: 2em;">
+        <div style="flex: 49%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves-small_page_14.svg" alt="Obstacles oracle setup" style="height: 400px;">
+        </div>
+        <div style="flex: 49%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves-small_page_17.svg" alt="Oracle geometric intersection graph" class="fragment" style="height: 500px;">
+        </div>
+    </div>
+    <div class="fragment" style="text-align: center; margin-top: 1em;">
+        <p style="font-size: 1.1em;">This is a <em>new</em> geometric intersection graph!</p>
+        <p style="font-size: 1.1em;">Call it $\overline{G}$.</p>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Obstacles in the Homology Cover: Oracle Ver.}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.49\textwidth}
+  \centering
+  \includegraphics[scale=0.6,page=14]{example-curves-small}\pause
+  \column{0.49\textwidth}
+  \centering
+  \includegraphics[scale=0.45,page=17]{example-curves-small}\pause
+\end{columns}
+This is a \emph{new} geometric intersection graph!
+Call it $\overline{G}$.
+\end{frame}
+-->
+
+<section>
+    <h3>The Oracle Model</h3>
+    <div style="display: flex; align-items: center; height: 100%; gap: 2em;">
+        <div style="flex: 60%; font-size: 0.8em;">
+            <div style="border: 1px solid #ccc; padding: 1em; background: #f9f9f9;">
+                <h4>Oracle</h4>
+                <p>Fix canonical points $x_{\gamma}$ for each obstacle $\gamma$, and a path $\pi$ from $s$ to $t$.</p>
+                <p><strong>Input:</strong> $\gamma_1,\gamma_2$, value $b\in\{0,1\}$</p>
+                <p><strong>Output:</strong> Path exists from $x_{\gamma_1}$ to $x_{\gamma_2}$ in $\gamma_1\cup\gamma_2$ crossing $\pi$ $b$ times, modulo $2$?</p>
+            </div>
+        </div>
+        <div style="flex: 39%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves-small_page_17.svg" alt="Oracle model graph" style="height: 500px;">
+        </div>
+    </div>
+    <p class="fragment" style="text-align: center; margin-top: 1em; font-size: 1.1em;">Equivalently, oracle model gives edges of $\overline{G}$.</p>
+</section>
+
+<!--
+\begin{frame}{The Oracle Model}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.6\textwidth}
+\begin{definition}[Oracle]
+Fix canonical points $x_{\gamma}$ for each obstacle $\gamma$, and a path $\pi$ from $s$ to $t$.\\
+\textbf{Input:} $\gamma_1,\gamma_2$, value $b\in\{0,1\}$\\
+\textbf{Output:} Path exists from $x_{\gamma_1}$ to $x_{\gamma_2}$ in $\gamma_1\cup\gamma_2$ crossing $\pi$ $b$ times, modulo $2$?
+\end{definition}
+  \column{0.39\textwidth}
+  \centering
+  \includegraphics[scale=0.45,page=17]{example-curves-small}\pause
+\end{columns}
+Equivalently, 
+oracle model gives edges of $\overline{G}$.
+\end{frame}
+-->
+
+<section>
+    <h3>Key Theorem (Homology Cover)</h3>
+    <div style="display: flex; align-items: center; height: 100%; gap: 2em;">
+        <div style="flex: 40%; font-size: 1.1em;">
+            <p>Each vertex in $\overline{G}$ corresponds to some obstacle in the original point-separation problem.</p>
+            <p>Two such vertices exist for each obstacle.</p>
+            <div class="fragment" data-fragment-index="1" style="border: 1px solid #ccc; padding: 1em; background: #f0f8ff; margin-top: 1em;">
+                <h4>Theorem</h4>
+                <p>For two vertices $v,v'\in\overline{G}$ corresponding to the same initial object $c$, let $d_c$ be their distance in $\overline{G}$.</p>
+                <p>Then the solution to the point-separation problem is exactly $\min_c d_c$.</p>
+            </div>
+        </div>
+        <div style="flex: 60%; text-align: center;">
+            <div class="r-stack">
+                <img src="graphics/svg_figures/example-curves-small_page_17.svg" alt="Graph G-bar" class="fragment fade-out" data-fragment-index="2" style="height: 700px;">
+                <img src="graphics/svg_figures/example-curves-small_page_18.svg" alt="Distance in G-bar" class="fragment fade-in-then-out" data-fragment-index="2" style="height: 700px;">
+                <img src="graphics/svg_figures/example-curves-small_page_6.svg" alt="Solution" class="fragment fade-in" data-fragment-index="3" style="height: 500px;">
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 1.8em; line-height: 1.8" class="fragment fade-in" data-fragment-index="4">Suffices to compute $n$ distances in $\overline{G}$.</p>
+    <p style="font-size: 1.8em; line-height: 1.8" class="fragment fade-in" data-fragment-index="5">$\implies$Suffices to solve APSP over $\overline{G}$.</p>
+</section>
+
+<!--
+\begin{frame}{Key Theorem (Homology Cover)}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.50\textwidth}
+Each vertex in $\overline{G}$ corresponds to some obstacle in the original point-separation problem.
+Two such vertices exist for each obstacle.\pause
+\vcentered{\begin{theorem}
+For two vertices $v,v'\in\overline{G}$ corresponding to the same initial object $c$,
+let $d_c$ be their distance in $\overline{G}$.
+Then the solution to the point-separation problem is exactly $\min_c d_c$.
+\end{theorem}}
+  
+  \column{0.50\textwidth}
+  \centering
+\only<3>{\includegraphics[scale=0.5,page=17]{example-curves-small}}
+\only<4>{\includegraphics[scale=0.5,page=18]{example-curves-small}}
+\only<5>{\includegraphics[scale=0.55,page=6]{example-curves-small}}
+\end{columns}
+\end{frame}
+-->
+
+<section>
+    <h3>Unweighted Specific Objects with Static Intersection</h3>
+    <div style="display: flex; align-items: center; height: 100%; gap: 2em;">
+        <div style="flex: 50%; display: flex; flex-direction: column; gap: 2em;">
+            <div style="border: 1px solid #ccc; padding: 1em; background: #f9f9f9;">
+                <h4>Static Intersection Problem</h4>
+                <p>Given two fixed sets $A,B$, report for each $a\in A$ whether it intersects any $b\in B$ (static inputs). Let $\text{SI}(n,m)$ be the total time ($|A|=n,|B|=m$).</p>
+            </div>
+
+            <div class="fragment" style="border: 1px solid #ccc; padding: 1em; background: #f0f8ff;">
+                <h4>Theorem (Chan & Skrepetos)</h4>
+                <p>For an unweighted geometric intersection graph $G$ induced by objects $\mathcal{C}$, APSP can be solved in $O(n\cdot\text{SI}(n,n))$ time.</p>
+            </div>
+        </div>
+
+        <div style="flex: 50%; display: flex; flex-direction: column; justify-content: center; gap: 2em;">
+            <div class="fragment">
+                <p><strong>Known results (in the <em>plane</em>):</strong></p>
+                <table style="margin: 0 auto; font-size: 0.9em; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #000;">
+                            <th style="padding: 0.5em; text-align: left;">Obstacle Class</th>
+                            <th style="padding: 0.5em;">$\text{SI}(n,n)$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.5em;">General Disks</td>
+                            <td style="padding: 0.5em;">$O(n \log n)$</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5em;">Axis-Aligned Line Segments</td>
+                            <td style="padding: 0.5em;">$O(n \log \log n)$</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5em;">Arbitrary Line Segments</td>
+                            <td style="padding: 0.5em;">$O(n^{4/3} \log^{1/3} n)$</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="fragment" style="font-size: 1.1em; text-align: center;">We want to get the same results in the <em>homology cover space</em>.</p>
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Unweighted Specific Objects with Static Intersection}
+\vcentered{\begin{definition}[Static Intersection Problem]
+Given two fixed sets $A,B$, report for each $a\in A$ whether it intersects any $b\in B$ (static inputs). Let $\si{n,m}$ be the total time ($|A|=n,|B|=m$).
+\end{definition}}\pause
+
+\begin{theorem}[Chan \& Skrepetos]
+For an unweighted geometric intersection graph $G$ induced by objects $\cC$,
+APSP can be solved in $O(n\cdot\si{n,n})$ time.
+\end{theorem}\pause
+Known results (in the \emph{plane}):
+\begin{center}
+    \begin{tabular}{l|c|l}
+        Obstacle Class & $\si{n,n}$ \\
+        \hline
+        General Disks & $O(n \log n)$ \\
+        Axis-Aligned Line Segments & $O(n \log \log n)$ \\
+        Arbitrary Line Segments & $O(n^{4/3} \log^{1/3} n)$ \\
+    \end{tabular}
+\end{center}\pause
+We want to get the same results in the \emph{homology cover space}.
+\end{frame}
+-->
+
+<section>
+    <h3>Static Intersection in the Homology Cover</h3>
+    <div style="text-align: center;">
+        <p style="font-size: 1.2em; line-height: 1.8;"><strong>General idea:</strong> Reduce to the planar case by splitting along $\overline{st}$.<br>
+        Split line segments are still line segments ⟹ reduce to <em>two</em> planar cases.</p>
+
+        <div class="r-stack">
+            <div class="fragment fade-out" data-fragment-index="1">
+                <img src="graphics/svg_figures/segment-algorithm_page_2.svg" style="height: 700px;">
+            </div>
+            
+            <div class="fragment fade-in-then-out" data-fragment-index="1">
+                <img src="graphics/svg_figures/segment-algorithm_page_1.svg" style="height: 600px;">
+            </div>
+            
+            <div class="fragment fade-in-then-out" data-fragment-index="2">
+                <img src="graphics/svg_figures/segment-algorithm_page_3.svg" style="height: 600px;">
+            </div>
+            
+            <div class="fragment fade-in" data-fragment-index="3">
+                <img src="graphics/svg_figures/segment-algorithm_page_4.svg" style="height: 700px;">
+            </div>
+        </div>
+        <div class="fragment fade-in" data-fragment-index="4">
+            <p style="font-size: 1.2em;"><strong>Disks:</strong> More complicated. Reduce to <em>four</em> planar cases.</p>
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Static Intersection in the Homology Cover}
+General idea: Reduce to the planar case by splitting along $\overline{st}$.\\\vspace{1em}
+Split line segments are still line segments $\implies$ reduce to \emph{two} planar cases.
+\todo[inline]{Add a figure for line segment splitting.}
+Disks: More complicated. Reduce to \emph{four} planar cases.
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>Static Intersection of Disks in the Homology Cover</h3>
+    <div style="text-align: center;">
+        <div class="r-stack">
+            <div class="fragment fade-out" data-fragment-index="1">
+                <img src="graphics/svg_figures/disk-algorithm_page_1.svg" style="height: 500px;">
+                <p style="font-size: 1.2em">(projection of all objects into plane)<br>
+                base set in <span style="color: blue;">blue</span>, query set in <span style="color: red;">red</span></p>
+            </div>
+
+            <div class="fragment fade-in-then-out" data-fragment-index="1">
+                <img src="graphics/svg_figures/disk-algorithm_page_2.svg" style="height: 350px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="graphics/svg_figures/disk-algorithm_page_3.svg" style="height: 350px;">
+                <p style="font-size: 1.2em">look at only one copy of the "plane" at a time</p>
+            </div>
+
+            <div class="fragment fade-in-then-out" data-fragment-index="2">
+                <img src="graphics/svg_figures/disk-algorithm_page_5.svg" style="height: 500px;">
+                <p style="font-size: 1.2em">split up top/bottom of that copy via line passing through $\overline{st}$</p>
+            </div>
+
+            <div class="fragment fade-in-then-out" data-fragment-index="3">
+                <img src="graphics/svg_figures/disk-algorithm_page_7.svg" style="height: 500px;">
+                <p style="font-size: 1.2em">Take boundary of base set</p>
+            </div>
+
+            <div class="fragment fade-in-then-out" data-fragment-index="4">
+                <img src="graphics/svg_figures/disk-algorithm_page_8.svg" style="height: 500px;">
+                <p style="font-size: 1.2em">Take boundary of base set</p>
+            </div>
+
+            <div class="fragment fade-in-then-out" data-fragment-index="5">
+                <img src="graphics/svg_figures/disk-algorithm_page_10.svg" style="height: 500px;">
+                <p style="font-size: 1.2em">Use point-location for query responses</p>
+            </div>
+
+            <div class="fragment fade-in" data-fragment-index="6">
+                <img src="graphics/svg_figures/disk-algorithm_page_10.svg" style="height: 500px;">
+                <p style="font-size: 1.2em">Total time: $\text{SI}(n,n) = O(n\log n)$.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Static Intersection of Disks in the Homology Cover}
+\begin{center}
+\only<1>{\includegraphics[scale=0.6,page=1]{disk-algorithm}}
+\only<2>{\includegraphics[scale=0.45,page=2]{disk-algorithm}\hfill%
+\includegraphics[scale=0.45,page=3]{disk-algorithm}}
+\only<3>{\includegraphics[scale=0.6,page=5]{disk-algorithm}}
+\only<4>{\includegraphics[scale=0.6,page=7]{disk-algorithm}}
+\only<5>{\includegraphics[scale=0.6,page=8]{disk-algorithm}}
+\only<6->{\includegraphics[scale=0.6,page=10]{disk-algorithm}}\\
+\only<1>{(projection of all objects into plane)\\}
+\only<1>{
+\begin{center}
+base set in \textcolor{blue}{blue}, query set in \textcolor{red}{red}
+\end{center}
+}
+\only<2>{look at only one copy of the ``plane'' at a time}
+\onslide<7>{Total time: $\si{n,n}=O(n\log n)$.}
+\end{center}
+\end{frame}
+-->
+
+<section class="extra-short-hide">
+    <h3><span style="color: red;">Weighted</span> Specific Objects: What is a Biclique Cover?</h3>
+    <div style="text-align: center;">
+        <div style="display: flex; gap: 3em; justify-content: center; align-items: center;">
+            <div style="text-align: center;">
+                <img src="graphics/svg_figures/biclique-covers_page_1.svg" style="height: 350px;">
+                <p style="font-size: 1.2em;">Biclique<span class="fragment"><br>Size: $5+5=10$</span></p>
+            </div>
+            <div class="fragment" style="text-align: center;">
+                <img src="graphics/svg_figures/biclique-covers_page_5.svg" style="height: 350px;">
+                <p style="font-size: 1.2em;">Sparsified Biclique<br>Edges: biclique size $\times2$</p>
+            </div>
+        </div>
+        <div class="fragment" style="text-align: center; margin-top: 2em;">
+            <p style="font-size: 1.1em;">A <u>biclique cover</u> is a set of biclique subgraphs whose union is $\overline{G}$.</p>
+            <p style="font-size: 1.1em;" class="fragment">Size = sum of biclique sizes.</p>
+            <p style="font-size: 1.1em;" class="fragment">Small <u>biclique cover</u> = sparse graph preserving vertex-weighted shortest-paths! Run Dijkstra.</p>
+        </div>
+    </div>
+</section>
+
+<section class="long-only">
+    <h3><span style="color: red;">Weighted</span> Specific Objects: Biclique Cover Size Example</h3>
+    <div class="r-stack" style="text-align: center;">
+        <div class="fragment fade-out" data-fragment-index="1">
+            <img src="graphics/svg_figures/biclique-covers_page_2.svg" style="height: 500px;">
+            <p style="font-size: 1.2em;">Line segment intersection graph. Biclique cover size?</p>
+        </div>
+        <div class="fragment fade-in" data-fragment-index="1">
+            <img src="graphics/svg_figures/biclique-covers_page_3.svg" style="height: 500px;">
+            <p style="font-size: 1.2em;">Biclique cover size? $9+4=13$</p>
+        </div>
+    </div>
+</section>
+
+<section class="extra-short-hide">
+    <h3><span style="color: red;">Weighted</span> Specific Objects: Biclique Cover Size Bounds</h3>
+    <div style="text-align: center;">
+        <div style="display: flex; gap: 3em; justify-content: center;">
+            <div>
+                <h4>Plane</h4>
+                <table style="border-collapse: collapse;">
+                    <thead><tr style="border-bottom: 2px solid #000;"><th style="padding: 0.5em; text-align: left;">Obstacle Class</th><th style="padding: 0.5em;">Biclique Cover</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding: 0.5em;">Axis-Aligned Line Segments</td><td style="padding: 0.5em;">$O(n \text{ polylog } n)$</td></tr>
+                        <tr><td style="padding: 0.5em;">Arbitrary Line Segments</td><td style="padding: 0.5em;">$O(n^{4/3} \text{ polylog } n)$</td></tr>
+                        <tr><td style="padding: 0.5em;">Unit Disks</td><td style="padding: 0.5em;">$O(n^{4/3} \text{ polylog } n)$</td></tr>
+                        <tr><td style="padding: 0.5em;">General Disks</td><td style="padding: 0.5em;">$O(n^{4/3} \text{ polylog } n)$</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="fragment">
+                <h4>Homology Cover</h4>
+                <table style="border-collapse: collapse;">
+                    <thead><tr style="border-bottom: 2px solid #000;"><th style="padding: 0.5em; text-align: left;">Obstacle Class</th><th style="padding: 0.5em;">Biclique Cover</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding: 0.5em;">Axis-Aligned Line Segments</td><td style="padding: 0.5em;">$O(n \text{ polylog } n)$</td></tr>
+                        <tr><td style="padding: 0.5em;">Arbitrary Line Segments</td><td style="padding: 0.5em;">$O(n^{4/3} \text{ polylog } n)$</td></tr>
+                        <tr><td style="padding: 0.5em;">Unit Disks</td><td style="padding: 0.5em; color: orange;">Open</td></tr>
+                        <tr><td style="padding: 0.5em;">General Disks</td><td style="padding: 0.5em; color: orange;">Open</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p class="fragment" style="font-size: 1.1em; margin-top: 2em;">Point-separation time complexity: $O(\text{biclique cover size} \cdot n \log n)$</p>
+    </div>
+</section>
+
+<!--
+\begin{frame}{\textcolor{red}{Weighted} Specific Objects with Biclique Covers}
+\todo[inline]{Give a figure demonstrating what a biclique cover is,
+a figure demonstrating what a biclique cover is,
+and then a figure demonstrating how to sparsify with biclique covers
+for shortest-paths.\\
+Then, give a table of biclique cover results in the plane,
+and explain which ones can be black-box extended to the homology cover space
+via the same splitting method as before.
+}
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>Lower Bound Construction</h3>
+    <div style="display: flex; align-items: center; height: 100%; gap: 2em; font-size: 1.4em">
+        <div style="flex: 45%;">
+            <ul>
+                <li>Reduce from min-weight triangle or sparse $k$-cycle/$k$-walk.</li>
+                <li>Create obstacle for each edge of input graph.</li>
+                <div class="fragment" data-fragment-index="2">
+                    <li>$k$-clique conjecture $\Rightarrow$ $\Omega(n^{2-\varepsilon})$ (weighted line segments)</li>
+                    <li>3SUM conjecture $\Rightarrow$ $\Omega(n^{3/2-\varepsilon})$ (unweighted line segments)</li>
+                </div>
+            </ul>
+        </div>
+
+        <div style="flex: 55%; text-align: center;">
+            <div class="r-stack">
+                <img src="graphics/svg_figures/lower-bounds_page_1.svg" class="fragment fade-out" data-fragment-index="1" style="height: 450px;">
+                <img src="graphics/svg_figures/lower-bounds_page_9.svg" class="fragment fade-in" data-fragment-index="1" style="height: 450px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+\section{Lower Bounds}
+
+\begin{frame}{Lower Bound Construction}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.45\textwidth}
+  \begin{itemize}
+    \item Reduce from min-weight triangle or sparse $k$-cycle/$k$-walk.
+    \item Create obstacle for each edge of input graph.\vspace{1em}
+    \onslide<3->{\item $k$-clique conjecture $\Rightarrow$ $\Omega(n^{2-\varepsilon})$\\ (weighted line segments)}
+    \onslide<3->{\item 3SUM conjecture $\Rightarrow$ $\Omega(n^{3/2-\varepsilon})$\\ (unweighted line segments)}
+  \end{itemize}
+  
+  \column{0.55\textwidth}
+  \centering
+\only<1>{\includegraphics[scale=0.55,page=1]{lower-bounds}}
+% These should be different pages
+\only<2->{\includegraphics[scale=0.55,page=9]{lower-bounds}}
+\end{columns}
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>Proof Method</h3>
+    <div style="text-align: center;">
+        <img src="graphics/svg_figures/lower-bounds_page_5.svg" style="height: 600px;">
+    </div>
+</section>
+
+<!--
+\begin{frame}{Proof Method}
+\begin{center}
+\includegraphics[scale=0.45,page=5]{lower-bounds}
+\end{center}
+\end{frame}
+-->
+
+<section class="extra-short-hide">
+    <h3>Open Problems</h3>
+    <div style="font-size: 1.2em;">
+        <p><strong>Open Problems:</strong></p>
+        <ul>
+            <li>Better than $O(n^3)$ for weighted disks/unit disks?
+                <ul>
+                    <li>Likely doable with a specialized biclique cover via similar method to static intersection testing</li>
+                </ul>
+            </li>
+            <li>$O(n^{2-\varepsilon})$ for any case?
+                <ul>
+                    <li>Likely possible in $O(n^{2-\frac{1}{20}})$ for unit disks via a FOCS 2025 paper</li>
+                    <li>All other cases completely open (e.g. unweighted axis-aligned line segments)</li>
+                </ul>
+            </li>
+            <li>$\tilde{O}(n^{7/3-\varepsilon})$ for unweighted line segments? (bypass Hopcroft's)</li>
+            <li>$\tilde{O}(n^{2.5-\varepsilon})$ time for min-distance problem? (harder)
+                <ul>
+                    <li>Given $O(n)$ pairs $(a_i,b_i)$ in a graph $G$, find $\min_i d_G(a_i,b_i)$.</li>
+                </ul>
+            </li>
+            <li>Approximation-algorithms for multiple $(s,t)$ pairs
+                <ul>
+                    <li>"Generalized point-separation" is very hard, fast exact and FPT algorithms likely impossible.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Open Problems}
+  \textbf{Open Problems:}
+  \begin{itemize}
+    \item Better than $O(n^3)$ for weighted disks/unit disks?
+      \begin{itemize}
+        \item Likely doable with a specialized biclique cover via similar method to static intersection testing
+      \end{itemize}
+    \item $O(n^{2-\varepsilon})$ for any case?
+      \begin{itemize}
+        \item Likely possible in $O(n^{2-\frac1{20}})$ for unit disks via a FOCS 2025 paper
+        \item All other cases completely open
+      \end{itemize}
+    \item $\lO(n^2)$ for weighted line segments?
+    \item $\lO(n^2)$ time for min-distance problem? (harder)
+      \begin{itemize}
+        \item Given $O(n)$ pairs $(a_i,b_i)$ in a graph $G$,
+          find $\min_i d_G(a_i,b_i)$.
+      \end{itemize}
+    \item Approximation-algorithms for multiple $(s,t)$ pairs
+      \begin{itemize}
+        \item ``Generalized point-separation'' is very hard, fast exact and FPT algorithms likely impossible.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+-->
+
+<section>
+    <h3>Fin...?</h3>
+    <div style="display: flex; align-items: center; height: 100%; gap: 2em;">
+        <div style="flex: 45%; font-size: 1.2em;">
+            <p><strong>Summary:</strong> Reduce to shortest-path problem in homology cover space</p>
+            <br><br>
+            <p><strong>Questions?</strong></p>
+        </div>
+
+        <div style="flex: 55%; text-align: center;">
+            <img src="graphics/svg_figures/example-curves_page_29.svg" style="height: 600px;">
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Fin...?}
+\begin{columns}[c,totalwidth=\textwidth]
+  \column{0.45\textwidth}
+  \textbf{Summary:} Reduce to shortest-path problem in homology cover space\\
+  \vspace{3em}
+  \textbf{Questions?}
+
+  \column{0.55\textwidth}
+  \centering
+\includegraphics[scale=0.5,page=29]{example-curves}
+\end{columns}
+\end{frame}
+-->
+
+<section class="long-only">
+    <h2>Part 2: Subquadratic Approximations</h2>
+</section>
+
+<!--
+\section{Part 2: Subquadratic Approximations}
+
+% part 2 "title" slide of some sort
+\begin{frame}
+\todo[inline]{Need to look at this section.}
+\begin{center}
+\Huge{Part 2: Subquadratic Approximations}
+\end{center}
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>Breaking the Quadratic Barrier for Unweighted Objects</h3><br>
+    <div style="font-size: 1.2em;">
+        <ul>
+            <li>Limitation: Reductions to APSP have $\Omega(n^2)$ barrier</li><br>
+            <li class="fragment">Open Question: Can an exact algorithm beat quadratic time?</li><br>
+            <li class="fragment">Easier Question: Can an approximation algorithm beat quadratic time?</li><br>
+            <li class="fragment">Answer (for certain <em>unweighted</em> convex objects): <strong>Yes</strong> — via divide-and-conquer</li>
+        </ul>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Breaking the Quadratic Barrier for Unweighted Objects}
+\begin{itemize}
+  \item Limitation: Reductions to APSP have $\Omega(n^2)$ barrier
+  \item Open Question: Can an exact algorithm beat quadratic time?\pause
+  \item Easier Question: Can an approximation algorithm beat quadratic time?\pause
+  \item Answer (for certain \emph{unweighted} convex objects): Yes — via divide-and-conquer
+\end{itemize}
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>Approximation Results</h3>
+    <table style="margin: 0 auto; font-size: 1.2em; border-collapse: collapse; width: 80%;">
+        <thead>
+            <tr style="border-bottom: 2px solid #000;">
+                <th style="padding: 0.6em; text-align: left;"><strong>Object Type</strong></th>
+                <th style="padding: 0.6em;"><strong>Running Time</strong></th>
+                <th style="padding: 0.6em;"><strong>Randomized?</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background: #f0f8ff;">
+                <td colspan="3" style="padding: 0.3em; text-align: center; font-weight: bold;">Approximation Guarantee: OPT+1</td>
+            </tr>
+            <tr style="border-top: 1px dashed #666;">
+                <td style="padding: 0.3em;">Disk</td>
+                <td style="padding: 0.3em;">$O(n^{3/2} (\log n)^2)$</td>
+                <td style="padding: 0.3em;">Monte Carlo (w.h.p.)</td>
+            </tr>
+            <tr style="border-top: 1px dashed #666;">
+                <td style="padding: 0.3em;">Line segment</td>
+                <td style="padding: 0.3em;">$\tilde{O}(n^{11/6})$</td>
+                <td style="padding: 0.3em;">Monte Carlo (w.h.p.)</td>
+            </tr>
+            <tr style="border-top: 1px dashed #666;">
+                <td style="padding: 0.3em;">Rectilinear line segment</td>
+                <td style="padding: 0.3em;">$O(n^{3/2} (\log n)^2)$</td>
+                <td style="padding: 0.3em;">Monte Carlo (w.h.p.)</td>
+            </tr>
+            <tr style="background: #f0f8ff; border-top: 1px solid #000;">
+                <td colspan="3" style="padding: 0.3em; text-align: center; font-weight: bold;">Approximation Guarantee: $(1+\varepsilon)$ OPT+1</td>
+            </tr>
+            <tr style="border-top: 1px dashed #666;">
+                <td style="padding: 0.3em;">Disk</td>
+                <td style="padding: 0.3em;">$O\left( \frac{n (\log n)^3}{\varepsilon^2} \right)$</td>
+                <td style="padding: 0.3em;">Deterministic</td>
+            </tr>
+            <tr style="border-top: 1px dashed #666;">
+                <td style="padding: 0.3em;">Line segment</td>
+                <td style="padding: 0.3em;">$\tilde{O}\left( \frac{n^{4/3}}{\varepsilon^2} \right)$</td>
+                <td style="padding: 0.3em;">Deterministic</td>
+            </tr>
+            <tr style="border-top: 1px dashed #666;">
+                <td style="padding: 0.3em;">Rectilinear line segment</td>
+                <td style="padding: 0.3em;">$O\left( \frac{n (\log n)^3}{\varepsilon^2} \right)$</td>
+                <td style="padding: 0.3em;">Deterministic</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="margin-top: 1.5em; font-size: 1.3em; text-align: center;">All runtimes are <span style="color: blue;">subquadratic</span>!</p>
+</section>
+
+<!--
+\begin{frame}{Approximation Results}
+\begin{table}
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Objects} & \textbf{Approximation} & \textbf{Runtime} \\
+\midrule
+Disks & $(1+\varepsilon)$ OPT $+1$ & $\lO(n/\varepsilon^2)$ \\
+Segments & $(1+\varepsilon)$ OPT $+1$ & $\lO(n^{4/3}/\varepsilon^2)$ \\
+Disks & OPT $+1$ (Monte Carlo) & $\lO(n^{3/2})$ \\
+Segments & OPT $+1$ (Monte Carlo) & $\lO(n^{11/6})$ \\
+% TODO this is missing some of the results in the paper. Should add rectilinear line segment results at least, and should add deterministic/randomized column
+\bottomrule
+\end{tabular}
+\end{table}
+
+All runtimes are \textcolor{blue}{subquadratic}!
+\end{frame}
+-->
+
+<section class="long-only">
+    <h3>Fundamental Ideas for Approximation</h3>
+    <div style="font-size: 1.2em; line-height: 1.6;">
+        <div style="border: 1px solid #ccc; padding: 1.5em; background: #f9f9f9; margin-bottom: 1em;">
+            <p><strong>Key Theorem (restated):</strong> The solution to point-separation is exactly $\min_c d_c$, where $d_c$ is the distance between two vertices in $\overline{G}$ corresponding to object $c$.</p>
+        </div>
+        
+        <ul style="margin-left: 2em;">
+            <li class="fragment">We will <em>approximate</em> $d_c$ for every object $c$, rather than compute it exactly.</li><br>
+            
+            <li class="fragment">To get an <strong>optimum solution</strong> to point-separation: suffices to identify <em>any</em> object in an optimal solution.</li><br>
+            
+            <li class="fragment">To get a <strong>+1 approximation</strong>: suffices to identify <em>any</em> object in 1-neighbourhood of an optimal solution.</li><br>
+            
+            <li class="fragment">Similar principle applies for weaker approximations.</li>
+        </ul>
+    </div>
+</section>
+
+<!--
+% TODO frame for fundamental ideas:
+% - Re-state the "key theorem" from the part 1
+% - We will approximate $d_c$ for every object $c$, rather than compute it exactly.
+% - To get an optimum solution to the point-separation problem, suffices to identify _any_ object in an optimal solution.
+% - To get a +1 approximation to the optimum solution, suffices to identify _any_ object in 1-neighbourhood of an optimal solution
+% - Similar for weaker approximations
+-->
+
+<section class="long-only">
+    <h3>Monte Carlo Algorithm</h3>
+    <div style="font-size: 1.2em; line-height: 1.6;">
+        <div style="border: 1px solid #ccc; padding: 1.5em; background: #f0f8ff; margin-bottom: 1em;">
+            <p><strong>Recall:</strong> To get an optimum solution to point-separation, suffices to identify <em>any</em> object in an optimal solution.</p>
+        </div>
+        
+        <div style="display: flex; gap: 2em; align-items: flex-start;">
+            <div style="flex: 60%;">
+                <p><strong>Key Insight:</strong></p>
+                <ul style="margin-left: 1.5em;">
+                    <li class="fragment">Bigger solution = easier to find with random sampling</li>
+                    <li class="fragment">Use Monte Carlo filter to detect large OPT early</li>
+                </ul>
+            </div>
+            <div style="flex: 40%; text-align: center;" class="fragment">
+                <div style="border: 2px solid #007acc; padding: 1em; background: #f9f9f9;">
+                    <p><strong>Monte Carlo Theorem</strong></p>
+                    <p style="font-size: 0.9em;">Each iteration takes $\text{SP}(n)$ time. If separating set $C$ exists, with high probability find $C'$ with $|C'| \leq |C|$ in $O\left(\frac{|C|}{n}\log n\right)$ iterations.</p>
+                </div>
+            </div>
+        </div>
+        
+        <p class="fragment" style="text-align: center; margin-top: 1.5em; font-style: italic;">
+            Useful for detecting if $|C| = O(\sqrt{n})$ exists within $O(\sqrt{n}\log n)$ iterations.
+        </p>
+    </div>
+</section>
+
+<!--
+% TODO frame for Monte Carlo algorithm
+% Re-state:
+% - To get an optimum solution to the point-separation problem, suffices to identify _any_ object in an optimal solution.
+% Just outline two main idea: Bigger solution = easier to find w/ random sampling, then state theorem for monte carlo algorithm
+-->
+
+<section class="long-only">
+    <h3>Figure: Divide-and-Conquer over $\overline{st}$</h3>
+    <div style="text-align: center;">
+        <img src="graphics/svg_figures/dc_page_6.svg" alt="Divide-and-Conquer over st-bar" style="height: 700px;">
+
+        <p class="fragment" style="margin-top: 2em; font-size: 1.5em; font-style: italic; color: #666;">
+            Inspiration: Reif's algorithm for planar min-cut
+        </p>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Figure: Divide-and-Conquer over $\overline{st}$}
+\centering
+\includegraphics[scale=0.95,page=6]{point-separation-2-arxiv/graphics/dc} % make this figure bigger
+\end{frame}
+-->
+
+<!--
+% make remaining figures smaller
+-->
+
+<section class="long-only">
+    <h3>Dividing Paths</h3>
+    <div style="text-align: center;">
+        <div class="r-stack">
+            <img src="graphics/svg_figures/divpaths_page_1.svg" alt="Dividing Paths page 1" class="fragment fade-out" data-fragment-index="1" style="height: 600px;">
+            <div class="fragment fade-out" data-fragment-index="3">
+                <img src="graphics/svg_figures/divpaths_page_2.svg" alt="Dividing Paths page 2" class="fragment fade-in" data-fragment-index="1" style="height: 600px;">
+            </div>
+            <div class="fragment fade-out" data-fragment-index="5">
+                <img src="graphics/svg_figures/divpaths_page_3.svg" alt="Dividing Paths page 3" class="fragment fade-in" data-fragment-index="3" style="height: 600px;">
+            </div>
+            <img src="graphics/svg_figures/divpaths_page_4.svg" alt="Dividing Paths page 4" class="fragment fade-in" data-fragment-index="5" style="height: 600px;">
+        </div>
+        
+        <div style="margin-top: 2em;">
+            <div class="r-stack">
+                <div class="fragment fade-out" data-fragment-index="3">
+                    <p class="fragment fade-in" data-fragment-index="2" style="font-size: 1.2em; background: #f0f8ff; padding: 1em; border-radius: 5px;">
+                        <strong>Time to find initial path:</strong> $O(1)$ SSSP computations in $\overline{G}$
+                    </p>
+                </div>
+                
+                <div class="fragment fade-out" data-fragment-index="5">
+                    <p class="fragment fade-in" data-fragment-index="4" style="font-size: 1.2em; background: #f9f9f9; padding: 1em; border-radius: 5px;">
+                        <strong>Time to check path lengths:</strong> $O(\sqrt{n})$ SSSP computations in $\overline{G}$
+                    </p>
+                </div>
+                
+                <p class="fragment fade-in" data-fragment-index="6" style="font-size: 1.2em; background: #f0fff0; padding: 1em; border-radius: 5px;">
+                    <strong>Recurse into first short path:</strong> Perform $O(\text{length}) = O(\sqrt{n})$ SSSP computations
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="long-only">
+    <h3>Time Complexity Analysis</h3>
+    <div style="font-size: 1.2em; text-align: center;">
+        <div style="background: #f9f9f9; padding: 0.5em; border-radius: 10px; margin-bottom: 1em;">
+            <p style="font-size: 1em; margin-bottom: 0.5em;"><strong>Total Time Complexity:</strong></p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5em;">
+                <div style="border: 2px solid #007acc; padding: 0.5em; background: #f0f8ff; border-radius: 5px; text-align: center; font-size: 0.8em;">
+                    Monte Carlo Algorithm<br>
+                    $O(\sqrt{n}\log n)$ SSSP computations
+                </div>
+                <div class="fragment" data-fragment-index="1" style="font-size: 1.2em;">+</div>
+                <div class="fragment" data-fragment-index="1" style="border: 2px solid #28a745; padding: 0.5em; background: #f0fff0; border-radius: 5px; text-align: center; font-size: 0.8em;">
+                    <div style="font-weight: bold; margin-bottom: 0.4em;">Divide and Conquer</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.3em; margin-bottom: 0.4em;">
+                        <div style="border: 1px solid #28a745; padding: 0.3em; background: #e8f5e8; border-radius: 3px; font-size: 0.8em;">
+                            $O(\log n)$<br>levels
+                        </div>
+                        <div class="fragment" data-fragment-index="2" style="font-size: 1em;">×</div>
+                        <div class="fragment" data-fragment-index="2" style="border: 1px solid #28a745; padding: 0.3em; background: #e8f5e8; border-radius: 3px; font-size: 0.8em; text-align: center;">
+                            dividing path problem<br>collection using<br>$O(\sqrt{n})$ SSSP computations
+                        </div>
+                    </div>
+                    <div class="fragment" data-fragment-index="3" style="border-top: 1px solid #28a745; padding-top: 0.3em; font-size: 0.8em;">
+                        = $O(\sqrt{n}\log n)$ SSSP computations in total
+                    </div>
+                </div>
+                <div class="fragment" data-fragment-index="4" style="font-size: 1.2em;">=</div>
+                <div class="fragment" data-fragment-index="4" style="border: 2px solid #dc3545; padding: 0.5em; background: #fff0f0; border-radius: 5px; text-align: center; font-size: 0.8em;">
+                    <strong>Total</strong><br>
+                    $O(\sqrt{n}\log n)$ SSSP computations
+                </div>
+            </div>
+        </div>
+
+        <div class="fragment" data-fragment-index="5" style="margin-bottom: 1em;">
+            <table style="margin: 0 auto; font-size: 0.8em; border-collapse: collapse; width: 50%;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #000;">
+                        <th style="padding: 0.4em; text-align: left;"><strong>Object Type</strong></th>
+                        <th style="padding: 0.4em;"><strong>Running Time</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f0f8ff;">
+                        <td colspan="2" style="padding: 0.2em; text-align: center; font-weight: bold;">Approximation Guarantee: OPT+1</td>
+                    </tr>
+                    <tr style="border-top: 1px dashed #666;">
+                        <td style="padding: 0.2em;">Disk</td>
+                        <td style="padding: 0.2em;">$O(n^{3/2} (\log n)^2)$</td>
+                    </tr>
+                    <tr style="border-top: 1px dashed #666;">
+                        <td style="padding: 0.2em;">Line segment</td>
+                        <td style="padding: 0.2em;">$\tilde{O}(n^{11/6})$</td>
+                    </tr>
+                    <tr style="border-top: 1px dashed #666;">
+                        <td style="padding: 0.2em;">Rectilinear line segment</td>
+                        <td style="padding: 0.2em;">$O(n^{3/2} (\log n)^2)$</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="fragment" data-fragment-index="6" style="margin-top: 1em; padding: 1em; background: #fffacd; border: 1px solid #ddd; border-radius: 8px; width: 60%; margin-left: auto; margin-right: auto;">
+            <p style="font-size: 0.8em; text-align: center; margin: 0;">
+                <strong>$(1+\varepsilon)$OPT+1 approximations:</strong> Recursive dividing path routine
+            </p>
+        </div>
+    </div>
+</section>
+
+<!--
+\begin{frame}{Dividing Paths}
+\centering
+\includegraphics[scale=0.8,page=1]{point-separation-2-arxiv/graphics/divpaths}
+\end{frame}
+
+\begin{frame}{Dividing Paths (cont.)}
+\centering
+\includegraphics[scale=0.8,page=2]{point-separation-2-arxiv/graphics/divpaths}
+\end{frame}
+
+\begin{frame}{Dividing Paths (cont.)}
+\centering
+\includegraphics[scale=0.8,page=3]{point-separation-2-arxiv/graphics/divpaths}
+\end{frame}
+
+\begin{frame}{Dividing Paths (cont.)}
+\centering
+\includegraphics[scale=0.8,page=4]{point-separation-2-arxiv/graphics/divpaths}
+\end{frame}
+-->
+
+<!--
+% get rid of this slide, it sucks
+\begin{frame}{Approximation: Key Ideas}
+\textbf{Monte Carlo filter:} Detect large OPT early; output if large  \\
+\textbf{Order on $\overline{st}$:} Sort convex objects by first intersection  \\
+\textbf{Dividing path:} Path through homology cover + 1-hop neighbourhood  \\
+\textbf{Divide-and-conquer:} Recurse on components split by the path  \\
+\textbf{Combine:} Return smallest candidate across recursion levels
+\end{frame}
+
+% add a second open problems slide (need to fill it in still)
+
+-->
+
+<section class="long-only">
+    <h3>Fin!</h3>
+    <div style="display: flex; align-items: center; height: 100%; gap: 2em;">
+        <div style="flex: 45%; font-size: 1.2em;">
+            <p><strong>Summary:</strong> Subquadratic approximation algorithms for point-separation via divide-and-conquer</p>
+            <br><br>
+            <p><strong>Questions?</strong></p>
+        </div>
+
+        <div style="flex: 55%; text-align: center;">
+            <img src="graphics/svg_figures/divpaths_page_3.svg" style="height: 600px;">
+        </div>
+    </div>
+</section>
+
+<!--
+% add a second fin slide
+-->
+
+<!-- LaTeX content ends here -->
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/math/math.js"></script>
+    <script>
+        // Set data-visibility based on version classes
+        const isShortVersion = document.querySelector('.reveal').classList.contains('short-version');
+        const isExtraShortVersion = document.querySelector('.reveal').classList.contains('extra-short-version');
+        
+        if (isExtraShortVersion) {
+            // Extra-short version: hide long-only and extra-short-hide sections
+            document.querySelectorAll('.long-only').forEach(section => {
+                section.setAttribute('data-visibility', 'hidden');
+            });
+            document.querySelectorAll('.extra-short-hide').forEach(section => {
+                section.setAttribute('data-visibility', 'hidden');
+            });
+        } else if (isShortVersion) {
+            // Short version: hide long-only sections
+            document.querySelectorAll('.long-only').forEach(section => {
+                section.setAttribute('data-visibility', 'hidden');
+            });
+        } else {
+            // Long version: hide short-only sections
+            document.querySelectorAll('.short-only').forEach(section => {
+                section.setAttribute('data-visibility', 'hidden');
+            });
+        }
+        
+        Reveal.initialize({
+            hash: true,
+            width: "100%",
+            height: "100%",
+            margin: 0.1,
+            plugins: [ RevealMath.MathJax3 ]
+        });
+    </script>
+</body>
+</html>
