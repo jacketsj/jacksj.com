@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="130" height="98" viewBox="0 0 130 98">
-<path fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(17.999268%, 54.499817%, 34.098816%)" stroke-opacity="1" stroke-miterlimit="10" d="M 160 672 L 256 672 " transform="matrix(1, 0, 0, -1, -127, 721)"/>
-<path fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 224 688 L 208 624 L 256 624 L 240 688 Z M 224 688 " transform="matrix(1, 0, 0, -1, -127, 721)"/>
-<path fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 208 720 L 208 704 L 240 704 L 224 720 Z M 208 720 " transform="matrix(1, 0, 0, -1, -127, 721)"/>
-<path fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 192 704 L 192 624 L 128 672 Z M 192 704 " transform="matrix(1, 0, 0, -1, -127, 721)"/>
-</svg>
