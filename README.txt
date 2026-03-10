@@ -6,3 +6,8 @@
 5. Create a python venv if necessary with `python3 -m venv venv`, `source venv/bin/activate`, `pip install -r requirements.txt`.
 6. Run `python3 gen.py` to build and deploy.
 7. Commit/push the changes to `index.html` (just to keep it up-to-date in main).
+
+
+# Test deployment
+1. Run `python3 test_gen.py`.
+2. Open `test_deploy/index.html`.
