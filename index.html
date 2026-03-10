@@ -43,6 +43,36 @@
             text-decoration: underline;
         }
 
+        /* Tabs Section */
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            border-bottom: 2px solid #ccc;
+        }
+        .tab-button {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            padding: 10px 5px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-button.active {
+            color: #000;
+            border-bottom-color: #007BFF;
+        }
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
         /* Publications Section */
         h3, h4 {
             color: #444;
@@ -136,10 +166,18 @@
             <p class="bio">I am a researcher and software engineer primarily specializing in computational geometry and related fields. I am often interested in efficient, practical algorithms and approaches for problems that also come with theoretical guarantees. I also enjoy exploring lower bounds/computational complexity, constraint solving, and various forms of parallelization and hardware acceleration.<br><br>I have worked on industry production systems for high-dimensional approximate nearest-neighbour problems, FPGA middleware, and low-level distributed robotics graph-compute systems.</p>
         </header>
 
-        <!-- Works Section -->
-        <div id="content">
-            <h3><b>Works</b></h3>
-            <h4>Preprints</h4><ul>
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'research')">Research</button>
+            <button class="tab-button" onclick="openTab(event, 'teaching')">Teaching</button>
+        </div>
+
+        <!-- Research Tab Content -->
+        <div id="research" class="tab-content active">
+            <!-- Works Section -->
+            <div id="content">
+                <h3><b>Works</b></h3>
+                <h4>Preprints</h4><ul>
         <li class="roundbox clickable-pub">
             <a href="https://arxiv.org/pdf/2602.08843" target="_blank" class="pub-bg-link"></a>
             <div class="pub-entry">
@@ -183,11 +221,11 @@
             <div class="pub-entry">
                 <div class="pub-header">
                     <div class="pub-links"></div>
-                    <span class="pub-title" title="Median Point for Parallel Flip Distance by Engineering Greedy Heuristics and Simulated Annealing (CG Challenge)">Median Point for Parallel Flip Distance</span>
+                    <span class="pub-title" title="Engineering Greedy Heuristics and Simulated Annealing Methods for the Median Triangulation under the Parallel Flip Distance (CG Challenge)">Greedy Heuristics and Simulated Annealing for Median Triangulation</span>
                 </div>
                 <span class="pub-authors">Jacobus Conradi, Benedikt Kolbe, Philip Mayer, Jonas Sauer, <b>Jack S-J</b></span><br>
                 <span class="pub-venue"><abbr title="International Symposium on Computational Geometry">SoCG</abbr>, 2026</span>
-                <span class="pub-comment">Working title. Paper accepted based on CG:SHOP competition results.</span>
+                <span class="pub-comment">Paper accepted based on CG:SHOP competition results. No preprint available yet.</span>
             </div>
         </li>
         
@@ -438,12 +476,12 @@
             </div>
         </li>
         </ul>
-        </div>
+            </div>
 
-        <!-- Presentation Section -->
-        <div id="content">
-            <h3><b>Presentations</b></h3>
-            <ul>
+            <!-- Presentation Section -->
+            <div id="content">
+                <h3><b>Presentations</b></h3>
+                <ul>
         <li class="roundbox clickable-pub">
             <a href="https://jacksj.com/docstore/talks/rsp-long-2.pdf" target="_blank" class="pub-bg-link"></a>
             <div class="pub-entry">
@@ -660,7 +698,45 @@
             </div>
         </li>
         </ul>
+            </div>
+        </div>
+
+        <!-- Teaching Tab Content -->
+        <div id="teaching" class="tab-content">
+            <div id="content">
+                <h3><b>Courses</b></h3>
+                <ul>
+    <li class="roundbox clickable-pub">
+        <a href="https://www.students.cs.ubc.ca/~cs-490/2019W2/problem-solving/" target="_blank" class="pub-bg-link"></a>
+        <div class="pub-entry">
+            <div class="pub-header">
+                <span class="pub-title">CPSC 490 - Problem Solving in Computer Science</span>
+            </div>
+            <span class="pub-authors">UBC</span><br>
+            <span class="pub-venue">January 2020 - April 2020</span>
+        </div>
+    </li>
+    </ul>
+            </div>
         </div>
     </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </body>
 </html>
