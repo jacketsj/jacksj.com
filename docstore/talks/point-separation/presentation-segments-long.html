@@ -3229,6 +3229,132 @@ Sources: https://time.com/5628391/area-51-meme-explained/ ; https://travelnevada
 <aside class="notes">Weighted point separation. Columns: line segments, rectilinear three-segment polylines, axis-aligned line segments. Upper bounds follow from current_arXiv/main.tex, Corollary separation-biclique-cover-times. Theorem lb-segments-clique and the three-piece construction in Theorem k-cycle-reduction give the near-quadratic lower bound for both of the first two columns, under the minimum-weight k-clique hypothesis quantified over all fixed odd k, as introduced in the bonus section. Both lower-bound cards name this hypothesis. The paper explicitly leaves nontrivial fine-grained lower bounds for axis-aligned segments open. There is no APSP-based lower-bound box. Pause before Bonus Fin.</aside>
 </section>
 </div></div><script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+<script>
+/* Apply the short, segment-only geometry introduction used for this talk. */
+(function tailorGeometryIntroduction() {
+  const geometryPrimer = document.querySelector('section[aria-label="Points, Segments, and Rays"]');
+  geometryPrimer.setAttribute('aria-label', 'Points, Segments, and Polygons');
+  geometryPrimer.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-label="Points, Segments, and Polygons" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1280" height="720" fill="white" />
+  <g data-start="0" data-end="3"><g class="fragment fade-out" data-fragment-index="2">
+    <text x="64" y="80" font-size="38" fill="#17212b" text-anchor="start" font-weight="bold">Points, Segments, and Polygons</text>
+    <text x="105" y="175" font-size="28" fill="#17212b" font-weight="bold">Point</text>
+    <line x1="105" y1="290" x2="335" y2="290" stroke="#9ca5af" stroke-width="2" />
+    <line x1="140" y1="320" x2="140" y2="195" stroke="#9ca5af" stroke-width="2" />
+    <circle cx="245" cy="235" r="7" fill="#1959ca" />
+    <text x="263" y="240" font-size="26" fill="#17212b">p = (x, y)</text>
+    <line x1="140" y1="235" x2="245" y2="235" stroke="#1959ca" stroke-width="1.5" stroke-dasharray="4 5" />
+    <line x1="245" y1="235" x2="245" y2="290" stroke="#1959ca" stroke-width="1.5" stroke-dasharray="4 5" />
+  </g></g>
+  <g data-start="1" data-end="3" class="fragment" data-fragment-index="0"><g class="fragment fade-out" data-fragment-index="2">
+    <text x="505" y="175" font-size="28" fill="#17212b" font-weight="bold">Segment</text>
+    <line x1="515" y1="285" x2="745" y2="215" stroke="#1959ca" stroke-width="4" stroke-linecap="round" />
+    <circle cx="515" cy="285" r="6" fill="#17212b" /><circle cx="745" cy="215" r="6" fill="#17212b" />
+    <text x="493" y="319" font-size="26" fill="#17212b">a</text><text x="758" y="214" font-size="26" fill="#17212b">b</text>
+    <text x="525" y="350" font-size="26" fill="#17212b">two endpoints: a, b</text>
+  </g></g>
+  <g data-start="2" data-end="3" class="fragment" data-fragment-index="1"><g class="fragment fade-out" data-fragment-index="2">
+    <text x="895" y="175" font-size="28" fill="#17212b" font-weight="bold">Polygon</text>
+    <polygon points="865,250 1015,195 1165,265 1120,430 930,445" fill="#f1f5fd" stroke="#1959ca" stroke-width="4" stroke-linejoin="round" />
+    <circle cx="865" cy="250" r="6" fill="#1959ca" /><circle cx="1015" cy="195" r="6" fill="#1959ca" />
+    <circle cx="1165" cy="265" r="6" fill="#1959ca" /><circle cx="1120" cy="430" r="6" fill="#1959ca" /><circle cx="930" cy="445" r="6" fill="#1959ca" />
+    <text x="1015" y="500" font-size="30" fill="#17212b" text-anchor="middle">(p₁, p₂, …, pₖ)</text>
+  </g></g>
+  <g data-start="3" class="fragment" data-fragment-index="2">
+    <text x="64" y="110" font-size="29" fill="#17212b" font-weight="bold">Segment–segment intersection</text>
+    <g transform="translate(0 -35) scale(1 0.85)">
+    <line x1="125" y1="385" x2="500" y2="240" stroke="#1959ca" stroke-width="4" stroke-linecap="round" />
+    <line x1="185" y1="225" x2="455" y2="425" stroke="#cc2639" stroke-width="4" stroke-linecap="round" />
+    <circle cx="125" cy="385" r="5" fill="#1959ca" /><circle cx="500" cy="240" r="5" fill="#1959ca" />
+    <circle cx="185" cy="225" r="5" fill="#cc2639" /><circle cx="455" cy="425" r="5" fill="#cc2639" />
+    <text x="105" y="415" font-size="25" fill="#1959ca">p</text><text x="513" y="241" font-size="25" fill="#1959ca">q</text>
+    <text x="162" y="217" font-size="25" fill="#cc2639">a</text><text x="467" y="443" font-size="25" fill="#cc2639">b</text>
+    <text x="312" y="500" font-size="29" fill="#1959ca" text-anchor="middle">Intersects</text>
+    <line x1="760" y1="250" x2="1140" y2="365" stroke="#1959ca" stroke-width="4" stroke-linecap="round" />
+    <line x1="800" y1="445" x2="1110" y2="400" stroke="#cc2639" stroke-width="4" stroke-linecap="round" />
+    <circle cx="760" cy="250" r="5" fill="#1959ca" /><circle cx="1140" cy="365" r="5" fill="#1959ca" />
+    <circle cx="800" cy="445" r="5" fill="#cc2639" /><circle cx="1110" cy="400" r="5" fill="#cc2639" />
+    <text x="735" y="251" font-size="25" fill="#1959ca">p</text><text x="1153" y="366" font-size="25" fill="#1959ca">q</text>
+    <text x="777" y="466" font-size="25" fill="#cc2639">a</text><text x="1123" y="415" font-size="25" fill="#cc2639">b</text>
+    <text x="950" y="500" font-size="29" fill="#17212b" text-anchor="middle">Does not intersect</text>
+    </g>
+  </g>
+  <g data-start="4" class="fragment" data-fragment-index="3">
+    <rect x="70" y="430" width="1140" height="235" rx="12" fill="#f1f5fd" stroke="#b6c8e8" stroke-width="2" />
+    <text x="105" y="464" font-size="25" fill="#1959ca">intersect iff</text>
+    <text x="98" y="548" font-size="28" fill="#17212b">max</text>
+    <path d="M200 479 H187 V620 H200 M1090 479 H1103 V620 H1090" fill="none" stroke="#17212b" stroke-width="2" />
+    <text x="648" y="500" font-size="25" fill="#17212b" text-anchor="middle">[(q.x−p.x)(a.y−p.y) − (q.y−p.y)(a.x−p.x)]</text>
+    <text x="648" y="535" font-size="25" fill="#17212b" text-anchor="middle">· [(q.x−p.x)(b.y−p.y) − (q.y−p.y)(b.x−p.x)],</text>
+    <text x="648" y="579" font-size="25" fill="#17212b" text-anchor="middle">[(b.x−a.x)(p.y−a.y) − (b.y−a.y)(p.x−a.x)]</text>
+    <text x="648" y="614" font-size="25" fill="#17212b" text-anchor="middle">· [(b.x−a.x)(q.y−a.y) − (b.y−a.y)(q.x−a.x)]</text>
+    <text x="1144" y="548" font-size="30" fill="#17212b" text-anchor="middle">&lt; 0</text>
+    <text x="640" y="648" font-size="19" fill="#647080" text-anchor="middle">Ignoring collinear and endpoint degeneracies.</text>
+  </g>
+  <text x="1218" y="688" font-size="18" fill="#647080" text-anchor="end">6</text>
+</svg>
+<aside class="notes">Introduce points, segments, and polygons incrementally. Keep both segment examples visible while revealing the expanded scalar test below. Each product is negative exactly when the endpoints of one segment lie on opposite sides of the other supporting line. Both products must be negative. Ignore collinear and endpoint degeneracies.</aside>`;
+
+  document.querySelector('section[aria-label="Point in Polygon"]').remove();
+
+  const pointPair = document.querySelector('section[aria-label="Point-Pair Separation"]');
+  const diagrams = [...pointPair.querySelectorAll('svg svg')];
+  const firstBoundary = diagrams[0].querySelector('path[stroke="rgb(0%, 0%, 0%)"]');
+  firstBoundary.setAttribute('d', 'M 8 10 L 70 8 L 88 50 L 80 96 L 30 100 L 12 60 Z');
+  firstBoundary.removeAttribute('transform');
+  for (const diagram of diagrams) {
+    const points = [...diagram.children].filter(element =>
+      element.tagName.toLowerCase() === 'path' && element.getAttribute('fill') === 'rgb(0%, 0%, 100%)'
+    );
+    points.forEach(point => point.setAttribute('fill', 'rgb(0%, 0%, 100%)'));
+    points[0].setAttribute('fill', 'rgb(100%, 0%, 0%)');
+    points[3].setAttribute('fill', 'rgb(100%, 0%, 0%)');
+  }
+  // Insert a convex crossing reveal before the original nonconvex progression.
+  const firstView = diagrams[0].parentElement.parentElement;
+  const crossingView = firstView.cloneNode(true);
+  for (const group of pointPair.querySelectorAll('g[data-start]')) {
+    const start = Number(group.dataset.start);
+    if (start >= 2 || (start === 1 && group.querySelector('svg'))) {
+      group.dataset.start = start + 1;
+      group.dataset.fragmentIndex = start;
+    }
+    if (group.hasAttribute('data-end')) {
+      group.dataset.end = Number(group.dataset.end) + 1;
+      group.querySelector(':scope > g.fade-out').dataset.fragmentIndex = Number(group.dataset.end) - 1;
+    }
+  }
+  firstView.dataset.end = '1';
+  firstView.firstElementChild.dataset.fragmentIndex = '0';
+  crossingView.dataset.start = '1';
+  crossingView.dataset.end = '2';
+  crossingView.setAttribute('class', 'fragment');
+  crossingView.dataset.fragmentIndex = '0';
+  crossingView.firstElementChild.dataset.fragmentIndex = '1';
+  const crossingDiagram = crossingView.querySelector('svg');
+  const svgNamespace = 'http://www.w3.org/2000/svg';
+  const connections = document.createElementNS(svgNamespace, 'g');
+  connections.innerHTML = '<path d="M16.535156 32.355469 H103.871094" fill="none" stroke="red" stroke-width="0.8" /><path d="M8.597656 72.050781 H103.871094" fill="none" stroke="blue" stroke-width="0.8" />';
+  const vertices = [[8,10], [70,8], [88,50], [80,96], [30,100], [12,60]];
+  for (const [y, left] of [[32.355469,16.535156], [72.050781,8.597656]]) {
+    for (let i = 0; i < vertices.length; i++) {
+      const [ax, ay] = vertices[i];
+      const [bx, by] = vertices[(i + 1) % vertices.length];
+      if ((ay > y) === (by > y)) continue;
+      const x = ax + (y - ay) * (bx - ax) / (by - ay);
+      if (x <= left || x >= 103.871094) continue;
+      const cross = document.createElementNS(svgNamespace, 'path');
+      cross.setAttribute('d', `M${x-2.4} ${y-2.4} l4.8 4.8 M${x-2.4} ${y+2.4} l4.8 -4.8`);
+      cross.setAttribute('stroke', 'red');
+      cross.setAttribute('stroke-width', '0.9');
+      connections.appendChild(cross);
+    }
+  }
+  crossingDiagram.insertBefore(connections, crossingDiagram.querySelector('path[fill-rule]'));
+  firstView.after(crossingView);
+})();
+</script>
 <script>/* Drive the visible trace from Reveal's step, not CSS transition timing. */
 (function installSegmentTraces() {
   let active = null;
